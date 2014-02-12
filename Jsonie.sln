@@ -1,0 +1,36 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2012
+Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "Jsonie", "Jsonie\Jsonie.vbproj", "{F9BF5C4B-4DF2-43E4-BC52-7A91CC1B11F3}"
+EndProject
+Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "JsonieTests", "JsonieTests\JsonieTests.vbproj", "{A12F1705-032F-4A60-88A3-327FED63702A}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{52FD61A5-1880-419A-BE28-2683D4FB6FD8}"
+	ProjectSection(SolutionItems) = preProject
+		Jsonie.vsmdi = Jsonie.vsmdi
+		Local.testsettings = Local.testsettings
+		TraceAndTestImpact.testsettings = TraceAndTestImpact.testsettings
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(TestCaseManagementSettings) = postSolution
+		CategoryFile = Jsonie.vsmdi
+	EndGlobalSection
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{F9BF5C4B-4DF2-43E4-BC52-7A91CC1B11F3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F9BF5C4B-4DF2-43E4-BC52-7A91CC1B11F3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F9BF5C4B-4DF2-43E4-BC52-7A91CC1B11F3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F9BF5C4B-4DF2-43E4-BC52-7A91CC1B11F3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A12F1705-032F-4A60-88A3-327FED63702A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A12F1705-032F-4A60-88A3-327FED63702A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A12F1705-032F-4A60-88A3-327FED63702A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A12F1705-032F-4A60-88A3-327FED63702A}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
