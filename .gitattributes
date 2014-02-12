@@ -1,0 +1,62 @@
+# Used to normalize line-endings across platforms
+
+# Resources:
+# https://help.github.com/articles/dealing-with-line-endings
+# http://adaptivepatchwork.com/2012/03/01/mind-the-end-of-your-line/
+# http://stackoverflow.com/questions/170961/whats-the-best-crlf-handling-strategy-with-git
+# http://davidlaing.com/2012/09/19/customise-your-gitattributes-to-become-a-git-ninja/
+
+# Cheatsheet:
+# text=auto
+# 	This setting will tell git to handle the files specified automatically. This is a good default option.
+# text
+# 	This setting tells git to always normalize the files specified. When committed they are stored with LF, on checkout they are converted to the OS's native line endings.
+# text eol=crlf
+# text eol=lf
+# binary
+# 	This setting tells git that the files specified are not text at all, and it should not try to change them. The binary setting is an alias for -text -diff.
+
+
+# ACTUAL CONFIGURATION
+# Auto detect text files and perform LF normalization
+* text=auto
+
+*.vb text 
+*.cs text diff=csharp
+*.java text diff=java
+*.html text diff=html
+*.css text
+*.js text
+*.sql text
+*.xaml text
+*.xml text
+*.php text
+*.cmd text
+*.resx text
+
+*.csproj text
+*.vbproj text
+*.fsproj text
+*.dbproj text
+
+*.sln text eol=crlf
+
+*.docx diff=astextplain
+*.DOCX diff=astextplain
+*.doc diff=astextplain
+*.DOC diff=astextplain
+*.dot diff=astextplain
+*.DOT diff=astextplain
+*.pdf diff=astextplain
+*.PDF diff=astextplain
+*.rtf diff=astextplain
+*.RTF diff=astextplain
+
+*.png binary
+*.jpg binary
+*.jepg binary
+*.gif binary
+*.PNG binary
+*.JPG binary
+*.JPEG binary
+*.gif binary
