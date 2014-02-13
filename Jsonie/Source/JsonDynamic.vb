@@ -10,6 +10,16 @@ Public Structure JsonDynamic
 
 
 	''' <summary>
+	''' Tests if this is null JSON object.
+	''' </summary>
+	Public ReadOnly Property IsNull As Boolean
+		Get
+			Return Me._value Is Nothing
+		End Get
+	End Property
+
+
+	''' <summary>
 	''' Tests if this is JSON object.
 	''' </summary>
 	Public ReadOnly Property IsObject As Boolean
