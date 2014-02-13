@@ -37,7 +37,7 @@ Public Class JsonBool
 #Region "ToString(), GetHashCode(), Equals()"
 
 	Public Overrides Function ToString() As String
-		Return JsonParser.Encode(Me)
+		Return JsonParser.Encode(Me, JsonEncoderOptions.ToStringDefault)
 	End Function
 
 
