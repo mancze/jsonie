@@ -366,6 +366,76 @@ Public Structure JsonDynamic
 		Return value._value
 	End Operator
 
+
+	Public Shared Widening Operator CType(text As String) As JsonDynamic
+		Return New JsonDynamic(text)
+	End Operator
+
+
+	Public Shared Widening Operator CType(value As Boolean) As JsonDynamic
+		Return New JsonDynamic(value)
+	End Operator
+
+
+	Public Shared Widening Operator CType(value As Boolean?) As JsonDynamic
+		Return New JsonDynamic(value)
+	End Operator
+
+
+	Public Shared Widening Operator CType(number As Integer) As JsonDynamic
+		Return New JsonDynamic(number)
+	End Operator
+
+
+	Public Shared Widening Operator CType(number As Integer?) As JsonDynamic
+		Return New JsonDynamic(number)
+	End Operator
+
+
+	Public Shared Widening Operator CType(number As Long) As JsonDynamic
+		Return New JsonDynamic(number)
+	End Operator
+
+
+	Public Shared Widening Operator CType(number As Long?) As JsonDynamic
+		Return New JsonDynamic(number)
+	End Operator
+
+
+	Public Shared Widening Operator CType(number As Single) As JsonDynamic
+		Return New JsonDynamic(number)
+	End Operator
+
+
+	Public Shared Widening Operator CType(number As Single?) As JsonDynamic
+		Return New JsonDynamic(number)
+	End Operator
+
+
+	Public Shared Widening Operator CType(number As Double) As JsonDynamic
+		Return New JsonDynamic(number)
+	End Operator
+
+
+	Public Shared Widening Operator CType(number As Double?) As JsonDynamic
+		Return New JsonDynamic(number)
+	End Operator
+
+
+	Public Shared Widening Operator CType(number As Decimal) As JsonDynamic
+		Return New JsonDynamic(number)
+	End Operator
+
+
+	Public Shared Widening Operator CType(number As Decimal?) As JsonDynamic
+		Return New JsonDynamic(number)
+	End Operator
+
+
+	Public Shared Widening Operator CType(nullable As Nullable) As JsonDynamic
+		Return New JsonDynamic(nullable)
+	End Operator
+
 #End Region
 
 End Structure
