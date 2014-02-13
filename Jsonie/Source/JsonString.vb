@@ -101,6 +101,15 @@ Public Class JsonString
 		Return text.Value
 	End Operator
 
+
+	Public Overloads Shared Widening Operator CType(text As String) As JsonString
+		If text Is Nothing Then
+			Return Nothing
+		End If
+
+		Return New JsonString(text)
+	End Operator
+
 #End Region
 
 End Class
