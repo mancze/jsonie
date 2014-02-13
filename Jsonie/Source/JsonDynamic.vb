@@ -6,7 +6,7 @@
 ''' </summary>
 Public Structure JsonDynamic
 
-	Public Shared ReadOnly [Empty] As JsonDynamic = Nothing
+	Public Shared ReadOnly [Null] As JsonDynamic = Nothing
 
 
 	''' <summary>
