@@ -1,4 +1,6 @@
-﻿Public Class JsonObject
+﻿Imports System.ComponentModel
+
+Public Class JsonObject
 	Inherits JsonValue
 	Implements IDictionary(Of String, JsonValue)
 
@@ -78,22 +80,6 @@
 
 
 	''' <summary>
-	''' Adds item into object and returns added value (actually the passed parameter).
-	''' This is handy for one-line adding and variable initalization:
-	''' <example>
-	''' Dim myArray = myObject.AddAndGet("array", new JsonArray())
-	''' </example>
-	''' </summary>
-	''' <typeparam name="TJsonValue">Type of the value being added.</typeparam>
-	''' <param name="key">Key of the value.</param>
-	''' <param name="value">Value to add.</param>
-	Public Function AddAndGet(Of TJsonValue As {JsonValue})(key As String, value As TJsonValue) As TJsonValue
-		Me.data.Add(key, value)
-		Return value
-	End Function
-
-
-	''' <summary>
 	''' Gets value stored under given key and casts it to desired type. If not such member exists
 	''' than defaultValue is returned.
 	''' </summary>
@@ -101,6 +87,7 @@
 	''' <param name="key">Key under which is object stored.</param>
 	''' <param name="defaultValue">Default value returned in case no such member exists.</param>
 	''' <returns>Value stored under given key casted to TJsonValue</returns>
+	''' <exception cref="InvalidCastException">If property with given key exist and is not of given type TJsonValue.</exception>
 	Public Function GetOrDefault(Of TJsonValue As {JsonValue})(key As String, Optional defaultValue As TJsonValue = Nothing) As TJsonValue
 		Dim result As JsonValue = Nothing
 
@@ -120,7 +107,8 @@
 	''' <param name="key">Key under which is object stored.</param>
 	''' <param name="defaultValue">Default value returned in case no such member exists.</param>
 	''' <returns>Value stored under given key casted to boolean.</returns>
-	Public Function GetOrDefault(key As String, defaultValue As Boolean) As Boolean
+	''' <exception cref="InvalidCastException">If property with given key exist and is not of Boolean type.</exception>
+	Public Function GetOrDefault(key As String, defaultValue As Boolean) As JsonBool
 		Dim result As JsonValue = Nothing
 
 		If Me.TryGetValue(key, result) Then
@@ -139,12 +127,113 @@
 	''' <param name="key">Key under which is object stored.</param>
 	''' <param name="defaultValue">Default value returned in case no such member exists.</param>
 	''' <returns>Value stored under given key casted to String.</returns>
-	Public Function GetOrDefault(key As String, defaultValue As String) As String
+	''' <exception cref="InvalidCastException">If property with given key exist and is not of String type.</exception>
+	Public Function GetOrDefault(key As String, defaultValue As String) As JsonString
 		Dim result As JsonValue = Nothing
 
 		If Me.TryGetValue(key, result) Then
 			' cast result to desired type
 			Return CType(result, JsonString)
+		Else
+			Return defaultValue
+		End If
+	End Function
+
+
+	''' <summary>
+	''' Gets value stored under given key and casts it to decimal. If not such member exists
+	''' than defaultValue is returned.
+	''' </summary>
+	''' <param name="key">Key under which is object stored.</param>
+	''' <param name="defaultValue">Default value returned in case no such member exists.</param>
+	''' <returns>Value stored under given key casted to String.</returns>
+	''' <exception cref="InvalidCastException">If property with given key exist and is not of Decimal type.</exception>
+	Public Function GetOrDefault(key As String, defaultValue As Decimal) As JsonNumber
+		Dim result As JsonValue = Nothing
+
+		If Me.TryGetValue(key, result) Then
+			' cast result to desired type
+			Return CType(result, JsonNumber)
+		Else
+			Return defaultValue
+		End If
+	End Function
+
+
+	''' <summary>
+	''' Gets value stored under given key and casts it to decimal. If not such member exists
+	''' than defaultValue is returned.
+	''' </summary>
+	''' <param name="key">Key under which is object stored.</param>
+	''' <param name="defaultValue">Default value returned in case no such member exists.</param>
+	''' <returns>Value stored under given key casted to String.</returns>
+	''' <exception cref="InvalidCastException">If property with given key exist and is not of Integer type.</exception>
+	Public Function GetOrDefault(key As String, defaultValue As Integer) As JsonNumber
+		Dim result As JsonValue = Nothing
+
+		If Me.TryGetValue(key, result) Then
+			' cast result to desired type
+			Return CType(result, JsonNumber)
+		Else
+			Return defaultValue
+		End If
+	End Function
+
+
+	''' <summary>
+	''' Gets value stored under given key and casts it to decimal. If not such member exists
+	''' than defaultValue is returned.
+	''' </summary>
+	''' <param name="key">Key under which is object stored.</param>
+	''' <param name="defaultValue">Default value returned in case no such member exists.</param>
+	''' <returns>Value stored under given key casted to String.</returns>
+	''' <exception cref="InvalidCastException">If property with given key exist and is not of Long type.</exception>
+	Public Function GetOrDefault(key As String, defaultValue As Long) As JsonNumber
+		Dim result As JsonValue = Nothing
+
+		If Me.TryGetValue(key, result) Then
+			' cast result to desired type
+			Return CType(result, JsonNumber)
+		Else
+			Return defaultValue
+		End If
+	End Function
+
+
+	''' <summary>
+	''' Gets value stored under given key and casts it to decimal. If not such member exists
+	''' than defaultValue is returned.
+	''' </summary>
+	''' <param name="key">Key under which is object stored.</param>
+	''' <param name="defaultValue">Default value returned in case no such member exists.</param>
+	''' <returns>Value stored under given key casted to String.</returns>
+	''' <exception cref="InvalidCastException">If property with given key exist and is not of Double type.</exception>
+	Public Function GetOrDefault(key As String, defaultValue As Double) As JsonNumber
+		Dim result As JsonValue = Nothing
+
+		If Me.TryGetValue(key, result) Then
+			' cast result to desired type
+			Return CType(result, JsonNumber)
+		Else
+			Return defaultValue
+		End If
+	End Function
+
+
+	''' <summary>
+	''' Gets value stored under given key and casts it to decimal. If not such member exists
+	''' than defaultValue is returned.
+	''' </summary>
+	''' <param name="key">Key under which is object stored.</param>
+	''' <param name="defaultValue">Default value returned in case no such member exists.</param>
+	''' <returns>Value stored under given key casted to String.</returns>
+	''' <exception cref="InvalidCastException">If property with given key exist and is not of Single type.</exception>
+	Public Function GetOrDefault(key As String, defaultValue As Single) As JsonNumber
+		Dim result As JsonValue = Nothing
+
+		If Me.TryGetValue(key, result) Then
+			' cast result to desired type
+			Return CType(result, JsonNumber)
 		Else
 			Return defaultValue
 		End If
@@ -165,6 +254,7 @@
 	''' </example>
 	''' <param name="key">Key under which is object stored.</param>
 	''' <returns>Value stored under given key casted as object.</returns>
+	''' <exception cref="InvalidCastException">If property with given key exist and is not of given type TJsonValue.</exception>
 	Public Function GetOrAddObject(key As String) As JsonObject
 		Dim value As JsonValue = Nothing
 		If Me.TryGetValue(key, value) Then
@@ -200,6 +290,7 @@
 	''' </example>
 	''' <param name="key">Key under which is array stored.</param>
 	''' <returns>Value stored under given key casted as array.</returns>
+	''' <exception cref="InvalidCastException">If property with given key exist and is not of given type TJsonValue.</exception>
 	Public Function GetOrAddArray(key As String) As JsonArray
 		Dim value As JsonValue = Nothing
 		If Me.TryGetValue(key, value) Then
@@ -218,6 +309,22 @@
 			Return Me.AddAndGet(key, New JsonArray())
 
 		End If
+	End Function
+
+
+	''' <summary>
+	''' Adds item into object and returns added value (actually the passed parameter).
+	''' This is handy for one-line adding and variable initalization:
+	''' <example>
+	''' Dim myArray = myObject.AddAndGet("array", new JsonArray())
+	''' </example>
+	''' </summary>
+	''' <typeparam name="TJsonValue">Type of the value being added.</typeparam>
+	''' <param name="key">Key of the value.</param>
+	''' <param name="value">Value to add.</param>
+	Protected Function AddAndGet(Of TJsonValue As {JsonValue})(key As String, value As TJsonValue) As TJsonValue
+		Me.data.Add(key, value)
+		Return value
 	End Function
 
 
