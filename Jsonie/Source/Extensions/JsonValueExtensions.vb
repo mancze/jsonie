@@ -67,6 +67,17 @@ Namespace Extensions
 			Return CType(value, JsonBool)
 		End Function
 
+
+		''' <summary>
+		''' Wraps given json value to dynamic type.
+		''' </summary>
+		''' <param name="value">Value to be wrapped as dynamic.</param>
+		''' <returns>Dynamic wrappper around given value.</returns>
+		<Extension()>
+		Public Function ToDynamic(value As JsonValue) As JsonDynamic
+			Return New JsonDynamic(value)
+		End Function
+
 	End Module
 
 End Namespace

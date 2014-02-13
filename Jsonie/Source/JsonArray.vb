@@ -229,6 +229,11 @@ Public Class JsonArray
 		ElseIf TypeOf obj Is JsonArray Then
 			Dim other = DirectCast(obj, JsonArray)
 			Return Me.Equals(other)
+
+		ElseIf TypeOf obj Is JsonDynamic Then
+			Dim other = CType(obj, JsonDynamic)
+			Return Me.Equals(other.Value)
+
 		End If
 
 		Return False
@@ -255,6 +260,11 @@ Public Class JsonArray
 		Next
 
 		Return True
+	End Function
+
+
+	Public Overloads Function Equals(other As JsonDynamic) As Boolean
+		Return Me.Equals(other.Value)
 	End Function
 
 #End Region

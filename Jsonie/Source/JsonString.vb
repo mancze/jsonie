@@ -84,6 +84,11 @@ Public Class JsonString
 		ElseIf TypeOf obj Is JsonString Then
 			Dim other = DirectCast(obj, JsonString)
 			Return Me._value = other._value
+
+		ElseIf TypeOf obj Is JsonDynamic Then
+			Dim other = CType(obj, JsonDynamic)
+			Return Me.Equals(other.Value)
+
 		End If
 
 		Return False
@@ -100,6 +105,11 @@ Public Class JsonString
 		End If
 
 		Return Me._value = other._value
+	End Function
+
+
+	Public Overloads Function Equals(other As JsonDynamic) As Boolean
+		Return Me.Equals(other.Value)
 	End Function
 
 #End Region

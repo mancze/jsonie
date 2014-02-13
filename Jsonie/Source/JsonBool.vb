@@ -57,6 +57,10 @@ Public Class JsonBool
 			Dim other = DirectCast(obj, JsonBool)
 			Return Me._value = other._value
 
+		ElseIf TypeOf obj Is JsonDynamic Then
+			Dim other = CType(obj, JsonDynamic)
+			Return Me.Equals(other.Value)
+
 		End If
 
 		Return False
@@ -71,6 +75,11 @@ Public Class JsonBool
 		End If
 
 		Return Me._value = other._value
+	End Function
+
+
+	Public Overloads Function Equals(other As JsonDynamic) As Boolean
+		Return Me.Equals(other.Value)
 	End Function
 
 #End Region

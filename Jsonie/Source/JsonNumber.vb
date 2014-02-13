@@ -94,6 +94,11 @@ Public Class JsonNumber
 		ElseIf TypeOf obj Is JsonNumber Then
 			Dim other = CType(obj, JsonNumber)
 			Return Me._decimalValue.Equals(other._decimalValue)
+
+		ElseIf TypeOf obj Is JsonDynamic Then
+			Dim other = CType(obj, JsonDynamic)
+			Return Me.Equals(other.Value)
+
 		End If
 
 		Return False
@@ -110,6 +115,11 @@ Public Class JsonNumber
 		End If
 
 		Return Me._decimalValue.Equals(other._decimalValue)
+	End Function
+
+
+	Public Overloads Function Equals(other As JsonDynamic) As Boolean
+		Return Me.Equals(other.Value)
 	End Function
 
 #End Region
