@@ -431,11 +431,6 @@ Public Structure JsonDynamic
 		Return New JsonDynamic(number)
 	End Operator
 
-
-	Public Shared Widening Operator CType(nullable As Nullable) As JsonDynamic
-		Return New JsonDynamic(nullable)
-	End Operator
-
 #End Region
 
 End Structure
