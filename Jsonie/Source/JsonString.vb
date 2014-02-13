@@ -112,4 +112,38 @@ Public Class JsonString
 
 #End Region
 
+#Region "Shared Methods"
+
+	''' <summary>
+	''' Indicates whether a specified JsonString is Nothing or empty.
+	''' </summary>
+	''' <param name="value">The object to test.</param>
+	''' <returns>True if the value parameter is Nothing or value.Value is String.Empty.</returns>
+	Public Shared Function IsNullOrEmpty(value As JsonString) As Boolean
+		If value Is Nothing Then
+			Return True
+		Else
+			Return String.IsNullOrEmpty(value.Value)
+		End If
+	End Function
+
+
+	''' <summary>
+	''' Indicates whether a specified JsonString is Nothing, empty, or consists only of white-space characters.
+	''' </summary>
+	''' <param name="value">The object to test.</param>
+	''' <returns>
+	''' True if the value parameter is Nothing or value.Value is String.Empty, or if value.Value consists exclusively 
+	''' of white-space characters.
+	''' </returns>
+	Public Shared Function IsNullOrWhitespace(value As JsonString) As Boolean
+		If value Is Nothing Then
+			Return True
+		Else
+			Return String.IsNullOrWhiteSpace(value.Value)
+		End If
+	End Function
+
+#End Region
+
 End Class

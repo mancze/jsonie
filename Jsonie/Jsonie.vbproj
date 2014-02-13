@@ -78,6 +78,7 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <Compile Include="Source\Extensions\JsonStringExtensions.vb" />
     <Compile Include="Source\JsonFormatException.vb" />
     <Compile Include="Source\JsonArray.vb" />
     <Compile Include="Source\JsonBool.vb" />
