@@ -131,6 +131,20 @@ Public Class JsonNumber
 		Return (Not former = latter)
 	End Operator
 
+
+	Public Overloads Shared Widening Operator CType(value As JsonNumber) As Decimal
+		If value Is Nothing Then
+			Return Nothing
+		End If
+
+		Return value.DecimalValue
+	End Operator
+
+
+	Public Overloads Shared Widening Operator CType(value As Decimal) As JsonNumber
+		Return New JsonNumber(value)
+	End Operator
+
 #End Region
 
 End Class
