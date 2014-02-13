@@ -103,11 +103,16 @@ Public Class JsonBool
 
 
 	Public Overloads Shared Widening Operator CType(value As Boolean) As JsonBool
-		If value Then
-			Return JsonBool.True
-		Else
-			Return JsonBool.False
+		Return If(value, JsonBool.True, JsonBool.False)
+	End Operator
+
+
+	Public Overloads Shared Widening Operator CType(value As Boolean?) As JsonBool
+		If Not value.HasValue Then
+			Return Nothing
 		End If
+
+		Return If(value, JsonBool.True, JsonBool.False)
 	End Operator
 
 #End Region

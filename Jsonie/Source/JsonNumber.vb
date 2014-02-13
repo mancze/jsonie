@@ -141,8 +141,73 @@ Public Class JsonNumber
 	End Operator
 
 
-	Public Overloads Shared Widening Operator CType(value As Decimal) As JsonNumber
-		Return New JsonNumber(value)
+	Public Overloads Shared Widening Operator CType(number As Integer) As JsonNumber
+		Return New JsonNumber(number)
+	End Operator
+
+
+	Public Overloads Shared Widening Operator CType(number As Integer?) As JsonNumber
+		If Not number.HasValue Then
+			Return Nothing
+		End If
+
+		Return New JsonNumber(number.Value)
+	End Operator
+
+
+	Public Overloads Shared Widening Operator CType(number As Long) As JsonNumber
+		Return New JsonNumber(number)
+	End Operator
+
+
+	Public Overloads Shared Widening Operator CType(number As Long?) As JsonNumber
+		If Not number.HasValue Then
+			Return Nothing
+		End If
+
+		Return New JsonNumber(number.Value)
+	End Operator
+
+
+	Public Overloads Shared Widening Operator CType(number As Single) As JsonNumber
+		Return New JsonNumber(number)
+	End Operator
+
+
+	Public Overloads Shared Widening Operator CType(number As Single?) As JsonNumber
+		If Not number.HasValue Then
+			Return Nothing
+		End If
+
+		Return New JsonNumber(number.Value)
+	End Operator
+
+
+	Public Overloads Shared Widening Operator CType(number As Double) As JsonNumber
+		Return New JsonNumber(number)
+	End Operator
+
+
+	Public Overloads Shared Widening Operator CType(number As Double?) As JsonNumber
+		If Not number.HasValue Then
+			Return Nothing
+		End If
+
+		Return New JsonNumber(number.Value)
+	End Operator
+
+
+	Public Overloads Shared Widening Operator CType(number As Decimal) As JsonNumber
+		Return New JsonNumber(number)
+	End Operator
+
+
+	Public Overloads Shared Widening Operator CType(number As Decimal?) As JsonNumber
+		If Not number.HasValue Then
+			Return Nothing
+		End If
+
+		Return New JsonNumber(number.Value)
 	End Operator
 
 #End Region

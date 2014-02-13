@@ -1,5 +1,6 @@
 ﻿Imports System.Globalization
 
+
 ''' <summary>
 ''' Base class for all JSON types except null which is represented also as null in .NET.
 ''' </summary>
@@ -83,9 +84,6 @@ Public MustInherit Class JsonValue
 		ElseIf TypeOf obj Is Boolean OrElse TypeOf obj Is Boolean? Then
 			Return If(CType(obj, Boolean), JsonBool.True, JsonBool.False)
 
-		ElseIf TypeOf obj Is Date OrElse TypeOf obj Is Date? Then
-			Return New JsonString(CType(obj, Date).ToString("u"))
-
 		ElseIf TypeOf obj Is Integer OrElse TypeOf obj Is Integer? Then
 			Return New JsonNumber(CType(obj, Integer))
 
@@ -104,15 +102,13 @@ Public MustInherit Class JsonValue
 		ElseIf TypeOf obj Is String Then
 			Return New JsonString(CType(obj, String))
 
-		ElseIf TypeOf obj Is Guid OrElse TypeOf obj Is Guid? Then
-			Return New JsonString(obj.ToString())
-
 		Else
 			Throw New InvalidCastException(String.Format("Cannot convert object of type {0} to JsonValue.", obj.GetType()))
 
 		End If
 	End Function
 
+#Region "Operators"
 
 	Public Shared Widening Operator CType(text As String) As JsonValue
 		If text Is Nothing Then
@@ -123,35 +119,10 @@ Public MustInherit Class JsonValue
 	End Operator
 
 
-	Public Shared Widening Operator CType(guid As Guid) As JsonValue
-		Return New JsonString(guid.ToString())
-	End Operator
-
-	Public Shared Widening Operator CType(guid As Guid?) As JsonValue
-		If Not guid.HasValue Then
-			Return Nothing
-		End If
-
-		Return New JsonString(guid.ToString())
-	End Operator
-
-
-	Public Shared Widening Operator CType(time As Date) As JsonValue
-		Return New JsonString(time.ToString("u", CultureInfo.InvariantCulture))
-	End Operator
-
-	Public Shared Widening Operator CType(time As Date?) As JsonValue
-		If Not time.HasValue Then
-			Return Nothing
-		End If
-
-		Return New JsonString(time.Value.ToString("u", CultureInfo.InvariantCulture))
-	End Operator
-
-
 	Public Shared Widening Operator CType(value As Boolean) As JsonValue
 		Return If(value, JsonBool.True, JsonBool.False)
 	End Operator
+
 
 	Public Shared Widening Operator CType(value As Boolean?) As JsonValue
 		If Not value.HasValue Then
@@ -166,6 +137,7 @@ Public MustInherit Class JsonValue
 		Return New JsonNumber(number)
 	End Operator
 
+
 	Public Shared Widening Operator CType(number As Integer?) As JsonValue
 		If Not number.HasValue Then
 			Return Nothing
@@ -178,6 +150,7 @@ Public MustInherit Class JsonValue
 	Public Shared Widening Operator CType(number As Long) As JsonValue
 		Return New JsonNumber(number)
 	End Operator
+
 
 	Public Shared Widening Operator CType(number As Long?) As JsonValue
 		If Not number.HasValue Then
@@ -192,6 +165,7 @@ Public MustInherit Class JsonValue
 		Return New JsonNumber(number)
 	End Operator
 
+
 	Public Shared Widening Operator CType(number As Single?) As JsonValue
 		If Not number.HasValue Then
 			Return Nothing
@@ -204,6 +178,7 @@ Public MustInherit Class JsonValue
 	Public Shared Widening Operator CType(number As Double) As JsonValue
 		Return New JsonNumber(number)
 	End Operator
+
 
 	Public Shared Widening Operator CType(number As Double?) As JsonValue
 		If Not number.HasValue Then
@@ -218,6 +193,7 @@ Public MustInherit Class JsonValue
 		Return New JsonNumber(number)
 	End Operator
 
+
 	Public Shared Widening Operator CType(number As Decimal?) As JsonValue
 		If Not number.HasValue Then
 			Return Nothing
@@ -230,5 +206,7 @@ Public MustInherit Class JsonValue
 	Public Shared Widening Operator CType(nullable As Nullable) As JsonValue
 		Return JsonValue.From(nullable)
 	End Operator
+
+#End Region
 
 End Class
