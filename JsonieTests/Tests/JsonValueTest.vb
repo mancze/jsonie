@@ -1,5 +1,6 @@
 ﻿Imports Microsoft.VisualStudio.TestTools.UnitTesting
 Imports Dextronet.Jsonie
+Imports Dextronet.Jsonie.Extensions
 
 
 '''<summary>

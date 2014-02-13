@@ -181,7 +181,7 @@
 
 			Else
 				' cast value to object
-				Return value.AsObject()
+				Return CType(value, JsonObject)
 
 			End If
 		Else
@@ -216,7 +216,7 @@
 
 			Else
 				' cast value to object
-				Return value.AsArray()
+				Return CType(value, JsonArray)
 
 			End If
 		Else
