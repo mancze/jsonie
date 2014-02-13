@@ -101,6 +101,15 @@ Public Class JsonBool
 		Return value.Value
 	End Operator
 
+
+	Public Overloads Shared Widening Operator CType(value As Boolean) As JsonBool
+		If value Then
+			Return JsonBool.True
+		Else
+			Return JsonBool.False
+		End If
+	End Operator
+
 #End Region
 
 End Class
