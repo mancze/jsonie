@@ -74,6 +74,24 @@ Public Structure JsonDynamic
 
 
 	''' <summary>
+	''' Gets the number of items in array or members in object of the dynamic type.
+	''' </summary>
+	Public ReadOnly Property Count As Integer
+		Get
+			If Me._value Is Nothing Then
+				Return 0
+			ElseIf Me._value.IsObject Then
+				Return Me._value.AsObject().Count
+			ElseIf Me._value.IsArray Then
+				Return Me._value.AsArray().Count
+			Else
+				Return 0
+			End If
+		End Get
+	End Property
+
+
+	''' <summary>
 	''' Gets the wrapped value.
 	''' </summary>
 	Public ReadOnly Property Value As JsonValue
