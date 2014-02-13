@@ -18,7 +18,7 @@
 	''' </summary>
 	Public ReadOnly Property Count As Integer Implements ICollection(Of KeyValuePair(Of String, JsonValue)).Count
 		Get
-			Return Me.Data.Count
+			Return Me.data.Count
 		End Get
 	End Property
 
@@ -32,23 +32,12 @@
 	''' <exception cref="KeyNotFoundException">The property is retrieved and key is not found.</exception>
 	Default Public Property Item(key As String) As JsonValue Implements IDictionary(Of String, JsonValue).Item
 		Get
-			Return Me.Data.Item(key)
+			Return Me.data.Item(key)
 		End Get
 		Set(value As JsonValue)
-			Me.Data.Item(key) = value
+			Me.data.Item(key) = value
 		End Set
 	End Property
-
-
-	''' <summary>
-	''' Underlying store.
-	''' </summary>
-	Private ReadOnly Property Data As Dictionary(Of String, JsonValue)
-		Get
-			Return _data
-		End Get
-	End Property
-	Private _data As Dictionary(Of String, JsonValue)
 
 
 	''' <summary>
@@ -56,13 +45,19 @@
 	''' </summary>
 	Private ReadOnly Property DataAsICollection As ICollection(Of KeyValuePair(Of String, JsonValue))
 		Get
-			Return _data
+			Return data
 		End Get
 	End Property
 
 
+	''' <summary>
+	''' Underlying store.
+	''' </summary>
+	Private data As Dictionary(Of String, JsonValue)
+
+
 	Public Sub New()
-		Me._data = New Dictionary(Of String, JsonValue)
+		Me.data = New Dictionary(Of String, JsonValue)
 	End Sub
 
 
@@ -70,7 +65,7 @@
 	''' Adds an element with the provided key and value to the object.
 	''' </summary>
 	Public Sub Add(key As String, value As JsonValue) Implements IDictionary(Of String, JsonValue).Add
-		Me.Data.Add(key, value)
+		Me.data.Add(key, value)
 	End Sub
 
 
@@ -78,7 +73,7 @@
 	''' Gets the value associated with the specified key.
 	''' </summary>
 	Public Function TryGetValue(key As String, ByRef value As JsonValue) As Boolean Implements IDictionary(Of String, JsonValue).TryGetValue
-		Return Me.Data.TryGetValue(key, value)
+		Return Me.data.TryGetValue(key, value)
 	End Function
 
 
@@ -93,7 +88,7 @@
 	''' <param name="key">Key of the value.</param>
 	''' <param name="value">Value to add.</param>
 	Public Function AddAndGet(Of TJsonValue As {JsonValue})(key As String, value As TJsonValue) As TJsonValue
-		Me.Data.Add(key, value)
+		Me.data.Add(key, value)
 		Return value
 	End Function
 
@@ -230,7 +225,7 @@
 	''' Removes the element with the specified key from the object.
 	''' </summary>
 	Public Function Remove(key As String) As Boolean Implements IDictionary(Of String, JsonValue).Remove
-		Return Me.Data.Remove(key)
+		Return Me.data.Remove(key)
 	End Function
 
 
@@ -240,7 +235,7 @@
 	''' </summary>
 	''' <returns>True if given property is defined in the object.</returns>
 	Public Function ContainsKey(key As String) As Boolean Implements IDictionary(Of String, JsonValue).ContainsKey
-		Return Me.Data.ContainsKey(key)
+		Return Me.data.ContainsKey(key)
 	End Function
 
 
@@ -263,7 +258,7 @@
 	''' Removes all properties from the object.
 	''' </summary>
 	Public Sub Clear() Implements ICollection(Of KeyValuePair(Of String, JsonValue)).Clear
-		Me.DataAsICollection.Clear()
+		Me.data.Clear()
 	End Sub
 
 #Region "IDictionary"
@@ -273,7 +268,7 @@
 	''' </summary>
 	Public ReadOnly Property Keys As ICollection(Of String) Implements IDictionary(Of String, JsonValue).Keys
 		Get
-			Return Me.Data.Keys
+			Return Me.data.Keys
 		End Get
 	End Property
 
@@ -283,7 +278,7 @@
 	''' </summary>
 	Public ReadOnly Property Values As ICollection(Of JsonValue) Implements IDictionary(Of String, JsonValue).Values
 		Get
-			Return Me.Data.Values
+			Return Me.data.Values
 		End Get
 	End Property
 
@@ -313,7 +308,7 @@
 	''' Determines whether the collection contains a specific value.
 	''' </summary>
 	Protected Function Contains(item As KeyValuePair(Of String, JsonValue)) As Boolean Implements ICollection(Of KeyValuePair(Of String, JsonValue)).Contains
-		Return Me.DataAsICollection.Contains(item)
+		Return Me.data.Contains(item)
 	End Function
 
 
@@ -337,12 +332,12 @@
 #Region "IEnumerable"
 
 	Public Function GetEnumerator() As IEnumerator(Of KeyValuePair(Of String, JsonValue)) Implements IEnumerable(Of KeyValuePair(Of String, JsonValue)).GetEnumerator
-		Return Me.Data.GetEnumerator()
+		Return Me.data.GetEnumerator()
 	End Function
 
 
 	Protected Function GetEnumeratorObject() As IEnumerator Implements IEnumerable.GetEnumerator
-		Return Me.Data.GetEnumerator()
+		Return Me.data.GetEnumerator()
 	End Function
 
 #End Region
@@ -355,7 +350,7 @@
 
 
 	Public Overrides Function GetHashCode() As Integer
-		Return Me._data.GetHashCode()
+		Return Me.data.GetHashCode()
 	End Function
 
 
