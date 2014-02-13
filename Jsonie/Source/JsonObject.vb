@@ -66,9 +66,31 @@ Public Class JsonObject
 	''' <summary>
 	''' Adds an element with the provided key and value to the object.
 	''' </summary>
+	''' <exception cref="ArgumentNullException">key is null.</exception>
+	''' <exception cref="ArgumentException">An property with the same key already exists.</exception>
 	Public Sub Add(key As String, value As JsonValue) Implements IDictionary(Of String, JsonValue).Add
 		Me.data.Add(key, value)
 	End Sub
+
+
+	''' <summary>
+	''' Adds an blank array property and returns it's instance.
+	''' </summary>
+	''' <exception cref="ArgumentNullException">key is null.</exception>
+	''' <exception cref="ArgumentException">An property with the same key already exists.</exception>
+	Public Function AddArray(key As String) As JsonArray
+		Return Me.AddAndGet(key, New JsonArray())
+	End Function
+
+
+	''' <summary>
+	''' Adds an blank object property and returns it's instance.
+	''' </summary>
+	''' <exception cref="ArgumentNullException">key is null.</exception>
+	''' <exception cref="ArgumentException">An property with the same key already exists.</exception>
+	Public Function AddObject(key As String) As JsonObject
+		Return Me.AddAndGet(key, New JsonObject())
+	End Function
 
 
 	''' <summary>
@@ -322,6 +344,8 @@ Public Class JsonObject
 	''' <typeparam name="TJsonValue">Type of the value being added.</typeparam>
 	''' <param name="key">Key of the value.</param>
 	''' <param name="value">Value to add.</param>
+	''' <exception cref="ArgumentNullException">key is null.</exception>
+	''' <exception cref="ArgumentException">An property with the same key already exists.</exception>
 	Protected Function AddAndGet(Of TJsonValue As {JsonValue})(key As String, value As TJsonValue) As TJsonValue
 		Me.data.Add(key, value)
 		Return value
