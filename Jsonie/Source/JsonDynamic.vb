@@ -232,6 +232,62 @@ Public Structure JsonDynamic
 #Region "Array Methods"
 
 	''' <summary>
+	''' Adds an items to the end of the array.
+	''' </summary>
+	''' <param name="item">Value to add.</param>
+	Public Sub Add(item As JsonValue)
+		If Me._value Is Nothing Then
+			Throw New InvalidCastException("Dynamic type represents null.")
+		End If
+
+		Me._value.AsArray().Add(item)
+	End Sub
+
+
+	''' <summary>
+	''' Adds the values of the specified collection to the end of the array.
+	''' </summary>
+	''' <param name="items">Collection of items to add.</param>
+	Public Sub AddRange(items As IEnumerable(Of JsonValue))
+		If Me._value Is Nothing Then
+			Throw New InvalidCastException("Dynamic type represents null.")
+		End If
+
+		Me._value.AsArray().AddRange(items)
+	End Sub
+
+
+	''' <summary>
+	''' Inserts an value into the array at the specified index.
+	''' </summary>
+	''' <exception cref="ArgumentOutOfRangeException">
+	''' index is less than 0 or index is greater than Count.
+	''' </exception> 
+	Public Sub Insert(index As Integer, item As JsonValue)
+		If Me._value Is Nothing Then
+			Throw New InvalidCastException("Dynamic type represents null.")
+		End If
+
+		Me._value.AsArray().Insert(index, item)
+	End Sub
+
+
+	''' <summary>
+	''' Inserts the values of a collection into the array at the specified index.
+	''' </summary>
+	''' <exception cref="ArgumentOutOfRangeException">
+	''' index is less than 0 or index is greater than Count.
+	''' </exception> 
+	Public Sub InsertRange(index As Integer, items As IEnumerable(Of JsonValue))
+		If Me._value Is Nothing Then
+			Throw New InvalidCastException("Dynamic type represents null.")
+		End If
+
+		Me._value.AsArray().InsertRange(index, items)
+	End Sub
+
+
+	''' <summary>
 	''' Gets value stored under given key index. If not such offset exists than defaultValue is returned.
 	''' </summary>
 	''' <param name="index">Index under which is value stored.</param>
