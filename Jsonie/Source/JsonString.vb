@@ -7,6 +7,35 @@ Public Class JsonString
 
 
 	''' <summary>
+	''' Gets the Char object at a specified position in the current JsonString object.
+	''' </summary>
+	''' <param name="index">A position in the current string.</param>
+	''' <value>The char at position index.</value>
+	''' <remarks>The index parameter is zero-based.</remarks>
+	''' <exception cref="IndexOutOfRangeException">
+	''' index is greater than or equal to the length of this object or less than zero.
+	''' </exception>
+	Default Public ReadOnly Property Chars(index As Integer) As Char
+		Get
+			Return _value.Chars(index)
+		End Get
+	End Property
+
+
+	''' <summary>
+	''' Gets the number of characters in the current JsonString object.
+	''' </summary>
+	''' <remarks>
+	''' The Length property returns the number of Char objects in this instance, not the number of Unicode characters.
+	''' </remarks>
+	Public ReadOnly Property Length As Integer
+		Get
+			Return _value.Length
+		End Get
+	End Property
+
+
+	''' <summary>
 	''' Actual string value encoded by this JSON object.
 	''' </summary>
 	Public ReadOnly Property Value As String
