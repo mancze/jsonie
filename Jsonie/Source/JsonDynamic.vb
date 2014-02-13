@@ -134,6 +134,39 @@ Public Structure JsonDynamic
 #Region "Object Methods"
 
 	''' <summary>
+	''' Adds an member with the provided key to the object.
+	''' </summary>
+	''' <exception cref="ArgumentNullException">key is null.</exception>
+	''' <exception cref="ArgumentException">An property with the same key already exists.</exception>
+	''' <exception cref="InvalidCastException">If this dynamic object does not wrap JsonObject.</exception>
+	Public Sub Add(key As String, value As JsonValue)
+		Me._value.AsObject().Add(key, value)
+	End Sub
+
+
+	''' <summary>
+	''' Adds an blank array property and returns it's instance.
+	''' </summary>
+	''' <exception cref="ArgumentNullException">key is null.</exception>
+	''' <exception cref="ArgumentException">An property with the same key already exists.</exception>
+	''' <exception cref="InvalidCastException">If this dynamic object does not wrap JsonObject.</exception>
+	Public Function AddArray(key As String) As JsonDynamic
+		Return Me._value.AsObject().AddArray(key).ToDynamic()
+	End Function
+
+
+	''' <summary>
+	''' Adds an blank object property and returns it's instance.
+	''' </summary>
+	''' <exception cref="ArgumentNullException">key is null.</exception>
+	''' <exception cref="ArgumentException">An property with the same key already exists.</exception>
+	''' <exception cref="InvalidCastException">If this dynamic object does not wrap JsonObject.</exception>
+	Public Function AddObject(key As String) As JsonDynamic
+		Return Me._value.AsObject().AddObject(key).ToDynamic()
+	End Function
+
+
+	''' <summary>
 	''' Gets value stored under given key and returns it as dynamic type. If not such member exists than defaultValue 
 	''' is returned.
 	''' </summary>
