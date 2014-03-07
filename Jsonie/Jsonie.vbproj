@@ -96,6 +96,7 @@
     <Compile Include="Source\JsonString.vb" />
     <Compile Include="Source\JsonValue.vb" />
     <Compile Include="Source\Extensions\JsonValueExtensions.vb" />
+    <Compile Include="Source\ThrowHelper.vb" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="My Project\Resources.resx">

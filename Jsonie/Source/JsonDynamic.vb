@@ -92,10 +92,10 @@ Public Structure JsonDynamic
 			ElseIf Me._value.IsArray Then
 				Return Me._value.AsArray().Count
 			ElseIf Me._value Is Nothing Then
-				Throw New InvalidCastException("Dynamic type represents null.")
-			Else
-				Throw New InvalidCastException("Json value is not object nor array.")
+				ThrowHelper.ThrowNullDynamicCasted()
 			End If
+
+			Throw New InvalidCastException("Json value is not object nor array.")
 		End Get
 	End Property
 
@@ -199,8 +199,10 @@ Public Structure JsonDynamic
 		Dim result As JsonValue = Nothing
 
 		If Me._value Is Nothing Then
-			Throw New InvalidCastException("Dynamic type represents null.")
-		ElseIf Me._value.AsObject().TryGetValue(key, result) Then
+			ThrowHelper.ThrowNullDynamicCasted()
+		End If
+
+		If Me._value.AsObject().TryGetValue(key, result) Then
 			Return result.ToDynamic()
 		Else
 			Return defaultValue.ToDynamic()
@@ -220,8 +222,10 @@ Public Structure JsonDynamic
 		Dim result As JsonValue = Nothing
 
 		If Me._value Is Nothing Then
-			Throw New InvalidCastException("Dynamic type represents null.")
-		ElseIf Me._value.AsObject().TryGetValue(key, result) Then
+			ThrowHelper.ThrowNullDynamicCasted()
+		End If
+
+		If Me._value.AsObject().TryGetValue(key, result) Then
 			Return result.ToDynamic()
 		Else
 			Return defaultValue
@@ -239,8 +243,10 @@ Public Structure JsonDynamic
 		Dim value As JsonValue = Nothing
 
 		If Me._value Is Nothing Then
-			Throw New InvalidCastException("Dynamic type represents null.")
-		ElseIf Me._value.AsObject().TryGetValue(key, value) Then
+			ThrowHelper.ThrowNullDynamicCasted()
+		End If
+
+		If Me._value.AsObject().TryGetValue(key, value) Then
 			Return value.ToDynamic()
 		Else
 			Me(key) = addValue
@@ -259,8 +265,10 @@ Public Structure JsonDynamic
 		Dim value As JsonValue = Nothing
 
 		If Me._value Is Nothing Then
-			Throw New InvalidCastException("Dynamic type represents null.")
-		ElseIf Me._value.AsObject().TryGetValue(key, value) Then
+			ThrowHelper.ThrowNullDynamicCasted()
+		End If
+
+		If Me._value.AsObject().TryGetValue(key, value) Then
 			Return value.ToDynamic()
 		Else
 			Me._value.AsObject()(key) = addValue
@@ -277,10 +285,10 @@ Public Structure JsonDynamic
 	''' <exception cref="InvalidCastException">If this dynamic object does not wrap JsonObject.</exception>
 	Public Function ContainsKey(key As String) As Boolean
 		If Me._value Is Nothing Then
-			Throw New InvalidCastException("Dynamic type represents null.")
-		Else
-			Return Me._value.AsObject().ContainsKey(key)
+			ThrowHelper.ThrowNullDynamicCasted()
 		End If
+
+		Return Me._value.AsObject().ContainsKey(key)
 	End Function
 
 
@@ -292,10 +300,10 @@ Public Structure JsonDynamic
 	''' <exception cref="InvalidCastException">If this dynamic object does not wrap JsonObject.</exception>
 	Public Function ContainsKeyNotNull(key As String) As Boolean
 		If Me._value Is Nothing Then
-			Throw New InvalidCastException("Dynamic type represents null.")
-		Else
-			Return Me._value.AsObject().ContainsKeyNotNull(key)
+			ThrowHelper.ThrowNullDynamicCasted()
 		End If
+
+		Return Me._value.AsObject().ContainsKeyNotNull(key)
 	End Function
 
 #End Region
@@ -308,7 +316,7 @@ Public Structure JsonDynamic
 	''' <param name="item">Value to add.</param>
 	Public Sub Add(item As JsonValue)
 		If Me._value Is Nothing Then
-			Throw New InvalidCastException("Dynamic type represents null.")
+			ThrowHelper.ThrowNullDynamicCasted()
 		End If
 
 		Me._value.AsArray().Add(item)
@@ -321,7 +329,7 @@ Public Structure JsonDynamic
 	''' <param name="items">Collection of items to add.</param>
 	Public Sub AddRange(items As IEnumerable(Of JsonValue))
 		If Me._value Is Nothing Then
-			Throw New InvalidCastException("Dynamic type represents null.")
+			ThrowHelper.ThrowNullDynamicCasted()
 		End If
 
 		Me._value.AsArray().AddRange(items)
@@ -336,7 +344,7 @@ Public Structure JsonDynamic
 	''' </exception> 
 	Public Sub Insert(index As Integer, item As JsonValue)
 		If Me._value Is Nothing Then
-			Throw New InvalidCastException("Dynamic type represents null.")
+			ThrowHelper.ThrowNullDynamicCasted()
 		End If
 
 		Me._value.AsArray().Insert(index, item)
@@ -351,7 +359,7 @@ Public Structure JsonDynamic
 	''' </exception> 
 	Public Sub InsertRange(index As Integer, items As IEnumerable(Of JsonValue))
 		If Me._value Is Nothing Then
-			Throw New InvalidCastException("Dynamic type represents null.")
+			ThrowHelper.ThrowNullDynamicCasted()
 		End If
 
 		Me._value.AsArray().InsertRange(index, items)
@@ -369,7 +377,7 @@ Public Structure JsonDynamic
 		Dim result As JsonValue = Nothing
 
 		If Me._value Is Nothing Then
-			Throw New InvalidCastException("Dynamic type represents null.")
+			ThrowHelper.ThrowNullDynamicCasted()
 		End If
 
 		Dim array = Me._value.AsArray()
@@ -392,7 +400,7 @@ Public Structure JsonDynamic
 		Dim result As JsonValue = Nothing
 
 		If Me._value Is Nothing Then
-			Throw New InvalidCastException("Dynamic type represents null.")
+			ThrowHelper.ThrowNullDynamicCasted()
 		End If
 
 		Dim array = Me._value.AsArray()
