@@ -6,8 +6,6 @@
 ''' </summary>
 Public Structure JsonDynamic
 
-	Public Shared ReadOnly [Null] As JsonDynamic = Nothing
-
 
 	''' <summary>
 	''' Tests if this is null JSON object.
@@ -86,16 +84,17 @@ Public Structure JsonDynamic
 	''' <summary>
 	''' Gets the number of items in array or members in object of the dynamic type.
 	''' </summary>
+	''' <exception cref="InvalidCastException">Underlying JSON value is not object or array.</exception>
 	Public ReadOnly Property Count As Integer
 		Get
-			If Me._value Is Nothing Then
-				Return 0
-			ElseIf Me._value.IsObject Then
+			If Me._value.IsObject Then
 				Return Me._value.AsObject().Count
 			ElseIf Me._value.IsArray Then
 				Return Me._value.AsArray().Count
+			ElseIf Me._value Is Nothing Then
+				Throw New InvalidCastException("Dynamic type represents null.")
 			Else
-				Return 0
+				Throw New InvalidCastException("Json value is not object nor array.")
 			End If
 		End Get
 	End Property
@@ -112,6 +111,12 @@ Public Structure JsonDynamic
 	Friend ReadOnly _value As JsonValue
 
 
+	''' <summary>
+	''' Gets the memeber indexed by given <paramref name="key" />.
+	''' </summary>
+	''' <param name="key">Key of the member to return.</param>
+	''' <value>Member stored under given <paramref name="key" />.</value>
+	''' <exception cref="InvalidCastException">If underlying JSON value is not object.</exception>
 	Default Public Property Item(key As String) As JsonDynamic
 		Get
 			Return Me._value.AsObject()(key).ToDynamic()
@@ -122,6 +127,12 @@ Public Structure JsonDynamic
 	End Property
 
 
+	''' <summary>
+	''' Gets the item stored on given <paramref name="index" />.
+	''' </summary>
+	''' <param name="index">Index of the item to return.</param>
+	''' <value>Item stored under given <paramref name="key" />.</value>
+	''' <exception cref="InvalidCastException">If underlying JSON value is not object.</exception>
 	Default Public Property Item(index As Integer) As JsonDynamic
 		Get
 			Return Me._value.AsArray()(index).ToDynamic()
@@ -211,7 +222,6 @@ Public Structure JsonDynamic
 		If Me._value Is Nothing Then
 			Throw New InvalidCastException("Dynamic type represents null.")
 		ElseIf Me._value.AsObject().TryGetValue(key, result) Then
-			' cast result to desired type
 			Return result.ToDynamic()
 		Else
 			Return defaultValue
@@ -467,19 +477,11 @@ Public Structure JsonDynamic
 
 
 	Public Shared Narrowing Operator CType(value As JsonValue) As JsonDynamic
-		If value Is Nothing Then
-			Return Nothing
-		End If
-
 		Return New JsonDynamic(value)
 	End Operator
 
 
 	Public Shared Widening Operator CType(value As JsonDynamic) As JsonValue
-		If value = Nothing Then
-			Return Nothing
-		End If
-
 		Return value._value
 	End Operator
 
