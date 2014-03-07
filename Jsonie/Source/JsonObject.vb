@@ -26,12 +26,12 @@ Public Class JsonObject
 
 
 	''' <summary>
-	''' Gets or sets the element with the specified key.
+	''' Gets or sets the element with the specified <paramref name="key" />.
 	''' </summary>
 	''' <param name="key">The key of the element to get or set.</param>
 	''' <value>The element with the specified key.</value>
-	''' <exception cref="ArgumentNullException">key is Nothing.</exception>
-	''' <exception cref="KeyNotFoundException">The property is retrieved and key is not found.</exception>
+	''' <exception cref="ArgumentNullException"><paramref name="key" /> is Nothing.</exception>
+	''' <exception cref="KeyNotFoundException"><paramref name="key" /> is not found within dictionary.</exception>
 	Default Public Property Item(key As String) As JsonValue Implements IDictionary(Of String, JsonValue).Item
 		Get
 			Return Me.data.Item(key)
@@ -66,8 +66,8 @@ Public Class JsonObject
 	''' <summary>
 	''' Adds an element with the provided key and value to the object.
 	''' </summary>
-	''' <exception cref="ArgumentNullException">key is null.</exception>
-	''' <exception cref="ArgumentException">An property with the same key already exists.</exception>
+	''' <exception cref="ArgumentNullException"><paramref name="key" /> is null.</exception>
+	''' <exception cref="ArgumentException">An property with the same <paramref name="key" /> already exists.</exception>
 	Public Sub Add(key As String, value As JsonValue) Implements IDictionary(Of String, JsonValue).Add
 		Me.data.Add(key, value)
 	End Sub
@@ -76,8 +76,8 @@ Public Class JsonObject
 	''' <summary>
 	''' Adds an blank array property and returns it's instance.
 	''' </summary>
-	''' <exception cref="ArgumentNullException">key is null.</exception>
-	''' <exception cref="ArgumentException">An property with the same key already exists.</exception>
+	''' <exception cref="ArgumentNullException"><paramref name="key" /> is null.</exception>
+	''' <exception cref="ArgumentException">An property with the same <paramref name="key" /> already exists.</exception>
 	Public Function AddArray(key As String) As JsonArray
 		Return Me.AddAndGet(key, New JsonArray())
 	End Function
@@ -86,8 +86,8 @@ Public Class JsonObject
 	''' <summary>
 	''' Adds an blank object property and returns it's instance.
 	''' </summary>
-	''' <exception cref="ArgumentNullException">key is null.</exception>
-	''' <exception cref="ArgumentException">An property with the same key already exists.</exception>
+	''' <exception cref="ArgumentNullException"><paramref name="key" /> is null.</exception>
+	''' <exception cref="ArgumentException">An property with the same <paramref name="key" /> already exists.</exception>
 	Public Function AddObject(key As String) As JsonObject
 		Return Me.AddAndGet(key, New JsonObject())
 	End Function
@@ -96,6 +96,7 @@ Public Class JsonObject
 	''' <summary>
 	''' Gets the value associated with the specified key.
 	''' </summary>
+	''' <exception cref="ArgumentNullException"><paramref name="key" /> is null.</exception>
 	Public Function TryGetValue(key As String, ByRef value As JsonValue) As Boolean Implements IDictionary(Of String, JsonValue).TryGetValue
 		Return Me.data.TryGetValue(key, value)
 	End Function
@@ -109,6 +110,7 @@ Public Class JsonObject
 	''' <param name="key">Key under which is object stored.</param>
 	''' <param name="defaultValue">Default value returned in case no such member exists.</param>
 	''' <returns>Value stored under given key casted to TJsonValue</returns>
+	''' <exception cref="ArgumentNullException"><paramref name="key" /> is null.</exception>
 	''' <exception cref="InvalidCastException">If property with given key exist and is not of given type TJsonValue.</exception>
 	Public Function GetOrDefault(Of TJsonValue As {JsonValue})(key As String, Optional defaultValue As TJsonValue = Nothing) As TJsonValue
 		Dim result As JsonValue = Nothing
@@ -129,6 +131,7 @@ Public Class JsonObject
 	''' <param name="key">Key under which is object stored.</param>
 	''' <param name="defaultValue">Default value returned in case no such member exists.</param>
 	''' <returns>Value stored under given key casted to boolean.</returns>
+	''' <exception cref="ArgumentNullException"><paramref name="key" /> is null.</exception>
 	''' <exception cref="InvalidCastException">If property with given key exist and is not of Boolean type.</exception>
 	Public Function GetOrDefault(key As String, defaultValue As Boolean) As JsonBool
 		Dim result As JsonValue = Nothing
@@ -149,6 +152,7 @@ Public Class JsonObject
 	''' <param name="key">Key under which is object stored.</param>
 	''' <param name="defaultValue">Default value returned in case no such member exists.</param>
 	''' <returns>Value stored under given key casted to String.</returns>
+	''' <exception cref="ArgumentNullException"><paramref name="key" /> is null.</exception>
 	''' <exception cref="InvalidCastException">If property with given key exist and is not of String type.</exception>
 	Public Function GetOrDefault(key As String, defaultValue As String) As JsonString
 		Dim result As JsonValue = Nothing
@@ -169,6 +173,7 @@ Public Class JsonObject
 	''' <param name="key">Key under which is object stored.</param>
 	''' <param name="defaultValue">Default value returned in case no such member exists.</param>
 	''' <returns>Value stored under given key casted to String.</returns>
+	''' <exception cref="ArgumentNullException"><paramref name="key" /> is null.</exception>
 	''' <exception cref="InvalidCastException">If property with given key exist and is not of Decimal type.</exception>
 	Public Function GetOrDefault(key As String, defaultValue As Decimal) As JsonNumber
 		Dim result As JsonValue = Nothing
@@ -189,6 +194,7 @@ Public Class JsonObject
 	''' <param name="key">Key under which is object stored.</param>
 	''' <param name="defaultValue">Default value returned in case no such member exists.</param>
 	''' <returns>Value stored under given key casted to String.</returns>
+	''' <exception cref="ArgumentNullException"><paramref name="key" /> is null.</exception>
 	''' <exception cref="InvalidCastException">If property with given key exist and is not of Integer type.</exception>
 	Public Function GetOrDefault(key As String, defaultValue As Integer) As JsonNumber
 		Dim result As JsonValue = Nothing
@@ -209,6 +215,7 @@ Public Class JsonObject
 	''' <param name="key">Key under which is object stored.</param>
 	''' <param name="defaultValue">Default value returned in case no such member exists.</param>
 	''' <returns>Value stored under given key casted to String.</returns>
+	''' <exception cref="ArgumentNullException"><paramref name="key" /> is null.</exception>
 	''' <exception cref="InvalidCastException">If property with given key exist and is not of Long type.</exception>
 	Public Function GetOrDefault(key As String, defaultValue As Long) As JsonNumber
 		Dim result As JsonValue = Nothing
@@ -229,6 +236,7 @@ Public Class JsonObject
 	''' <param name="key">Key under which is object stored.</param>
 	''' <param name="defaultValue">Default value returned in case no such member exists.</param>
 	''' <returns>Value stored under given key casted to String.</returns>
+	''' <exception cref="ArgumentNullException"><paramref name="key" /> is null.</exception>
 	''' <exception cref="InvalidCastException">If property with given key exist and is not of Double type.</exception>
 	Public Function GetOrDefault(key As String, defaultValue As Double) As JsonNumber
 		Dim result As JsonValue = Nothing
@@ -249,6 +257,7 @@ Public Class JsonObject
 	''' <param name="key">Key under which is object stored.</param>
 	''' <param name="defaultValue">Default value returned in case no such member exists.</param>
 	''' <returns>Value stored under given key casted to String.</returns>
+	''' <exception cref="ArgumentNullException"><paramref name="key" /> is null.</exception>
 	''' <exception cref="InvalidCastException">If property with given key exist and is not of Single type.</exception>
 	Public Function GetOrDefault(key As String, defaultValue As Single) As JsonNumber
 		Dim result As JsonValue = Nothing
@@ -276,6 +285,7 @@ Public Class JsonObject
 	''' </example>
 	''' <param name="key">Key under which is object stored.</param>
 	''' <returns>Value stored under given key casted as object.</returns>
+	''' <exception cref="ArgumentNullException"><paramref name="key" /> is null.</exception>
 	''' <exception cref="InvalidCastException">If property with given key exist and is not of given type TJsonValue.</exception>
 	Public Function GetOrAddObject(key As String) As JsonObject
 		Dim value As JsonValue = Nothing
@@ -312,6 +322,7 @@ Public Class JsonObject
 	''' </example>
 	''' <param name="key">Key under which is array stored.</param>
 	''' <returns>Value stored under given key casted as array.</returns>
+	''' <exception cref="ArgumentNullException"><paramref name="key" /> is null.</exception>
 	''' <exception cref="InvalidCastException">If property with given key exist and is not of given type TJsonValue.</exception>
 	Public Function GetOrAddArray(key As String) As JsonArray
 		Dim value As JsonValue = Nothing
@@ -344,8 +355,8 @@ Public Class JsonObject
 	''' <typeparam name="TJsonValue">Type of the value being added.</typeparam>
 	''' <param name="key">Key of the value.</param>
 	''' <param name="value">Value to add.</param>
-	''' <exception cref="ArgumentNullException">key is null.</exception>
-	''' <exception cref="ArgumentException">An property with the same key already exists.</exception>
+	''' <exception cref="ArgumentNullException"><paramref name="key" /> is null.</exception>
+	''' <exception cref="ArgumentException">An property with the same <paramref name="key" /> already exists.</exception>
 	Protected Function AddAndGet(Of TJsonValue As {JsonValue})(key As String, value As TJsonValue) As TJsonValue
 		Me.data.Add(key, value)
 		Return value
@@ -355,6 +366,7 @@ Public Class JsonObject
 	''' <summary>
 	''' Removes the element with the specified key from the object.
 	''' </summary>
+	''' <exception cref="ArgumentNullException"><paramref name="key" /> is null.</exception>
 	Public Function Remove(key As String) As Boolean Implements IDictionary(Of String, JsonValue).Remove
 		Return Me.data.Remove(key)
 	End Function
@@ -365,6 +377,7 @@ Public Class JsonObject
 	''' the property which might be null.
 	''' </summary>
 	''' <returns>True if given property is defined in the object.</returns>
+	''' <exception cref="ArgumentNullException"><paramref name="key" /> is null.</exception>
 	Public Function ContainsKey(key As String) As Boolean Implements IDictionary(Of String, JsonValue).ContainsKey
 		Return Me.data.ContainsKey(key)
 	End Function
@@ -375,6 +388,7 @@ Public Class JsonObject
 	''' </summary>
 	''' <returns>True if Me(key) exists and is not null.</returns>
 	''' <remarks>Equivalent to Me.ContainsKey(key) AndAlso Me(key) IsNot Nothing.</remarks>
+	''' <exception cref="ArgumentNullException"><paramref name="key" /> is null.</exception>
 	Public Function ContainsKeyNotNull(key As String) As Boolean
 		Dim value As JsonValue = Nothing
 		If Me.TryGetValue(key, value) Then

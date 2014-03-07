@@ -19,6 +19,9 @@ Public Class JsonArray
 	''' <summary>
 	''' Gets or sets the element at the specified index.
 	''' </summary>
+	''' <exception cref="ArgumentOutOfRangeException">
+	''' <paramref name="index" /> is less than 0 or is equal or more than <see cref="Count" />.
+	''' </exception>
 	Default Public Property Item(index As Integer) As JsonValue Implements IList(Of JsonValue).Item
 		Get
 			Return Me.data(index)
@@ -82,8 +85,8 @@ Public Class JsonArray
 	''' Inserts an value into the array at the specified index.
 	''' </summary>
 	''' <exception cref="ArgumentOutOfRangeException">
-	''' index is less than 0 or index is greater than Count.
-	''' </exception> 
+	''' <paramref name="index" /> is less than 0 or is equal or more than <see cref="Count" />.
+	''' </exception>
 	Public Sub Insert(index As Integer, item As JsonValue) Implements IList(Of JsonValue).Insert
 		Me.data.Insert(index, item)
 	End Sub
@@ -93,8 +96,8 @@ Public Class JsonArray
 	''' Inserts the values of a collection into the array at the specified index.
 	''' </summary>
 	''' <exception cref="ArgumentOutOfRangeException">
-	''' index is less than 0 or index is greater than Count.
-	''' </exception> 
+	''' <paramref name="index" /> is less than 0 or is equal or more than <see cref="Count" />.
+	''' </exception>
 	Public Sub InsertRange(index As Integer, items As IEnumerable(Of JsonValue))
 		Me.data.InsertRange(index, items)
 	End Sub
@@ -128,7 +131,7 @@ Public Class JsonArray
 	''' </summary>
 	''' <param name="index">The zero-based index of the element to remove.</param>
 	''' <exception cref="ArgumentOutOfRangeException">
-	''' index is less than 0 or index is equal to or greater than Count.
+	''' <paramref name="index" /> is less than 0 or is equal or more than <see cref="Count" />.
 	''' </exception>
 	Public Sub RemoveAt(index As Integer) Implements IList(Of JsonValue).RemoveAt
 		Me.data.RemoveAt(index)

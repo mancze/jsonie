@@ -1,6 +1,7 @@
 ﻿''' <summary>
 ''' Thrown when JSON format is invalid.
 ''' </summary>
+<Serializable>
 Public Class JsonFormatException
 	Inherits JsonException
 

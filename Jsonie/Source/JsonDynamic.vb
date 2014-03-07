@@ -117,6 +117,8 @@ Public Structure JsonDynamic
 	''' <param name="key">Key of the member to return.</param>
 	''' <value>Member stored under given <paramref name="key" />.</value>
 	''' <exception cref="InvalidCastException">If underlying JSON value is not object.</exception>
+	''' <exception cref="ArgumentNullException"><paramref name="key" /> is Nothing.</exception>
+	''' <exception cref="KeyNotFoundException">The property is retrieved and <paramref name="key" /> is not found.</exception>
 	Default Public Property Item(key As String) As JsonDynamic
 		Get
 			Return Me._value.AsObject()(key).ToDynamic()
@@ -132,6 +134,9 @@ Public Structure JsonDynamic
 	''' </summary>
 	''' <param name="index">Index of the item to return.</param>
 	''' <value>Item stored under given <paramref name="key" />.</value>
+	''' <exception cref="ArgumentOutOfRangeException">
+	''' <paramref name="index" /> is less than 0 or is equal or more than <see cref="Count" />.
+	''' </exception>
 	''' <exception cref="InvalidCastException">If underlying JSON value is not object.</exception>
 	Default Public Property Item(index As Integer) As JsonDynamic
 		Get
@@ -157,8 +162,8 @@ Public Structure JsonDynamic
 	''' <summary>
 	''' Adds an member with the provided key to the object.
 	''' </summary>
-	''' <exception cref="ArgumentNullException">key is null.</exception>
-	''' <exception cref="ArgumentException">An property with the same key already exists.</exception>
+	''' <exception cref="ArgumentNullException"><paramref name="key" /> is null.</exception>
+	''' <exception cref="ArgumentException">An property with the same <paramref name="key" /> already exists.</exception>
 	''' <exception cref="InvalidCastException">If this dynamic object does not wrap JsonObject.</exception>
 	Public Sub Add(key As String, value As JsonValue)
 		Me._value.AsObject().Add(key, value)
@@ -168,8 +173,8 @@ Public Structure JsonDynamic
 	''' <summary>
 	''' Adds an blank array property and returns it's instance.
 	''' </summary>
-	''' <exception cref="ArgumentNullException">key is null.</exception>
-	''' <exception cref="ArgumentException">An property with the same key already exists.</exception>
+	''' <exception cref="ArgumentNullException"><paramref name="key" /> is null.</exception>
+	''' <exception cref="ArgumentException">An property with the same <paramref name="key" /> already exists.</exception>
 	''' <exception cref="InvalidCastException">If this dynamic object does not wrap JsonObject.</exception>
 	Public Function AddArray(key As String) As JsonDynamic
 		Return Me._value.AsObject().AddArray(key).ToDynamic()
@@ -179,8 +184,8 @@ Public Structure JsonDynamic
 	''' <summary>
 	''' Adds an blank object property and returns it's instance.
 	''' </summary>
-	''' <exception cref="ArgumentNullException">key is null.</exception>
-	''' <exception cref="ArgumentException">An property with the same key already exists.</exception>
+	''' <exception cref="ArgumentNullException"><paramref name="key" /> is null.</exception>
+	''' <exception cref="ArgumentException">An property with the same <paramref name="key" /> already exists.</exception>
 	''' <exception cref="InvalidCastException">If this dynamic object does not wrap JsonObject.</exception>
 	Public Function AddObject(key As String) As JsonDynamic
 		Return Me._value.AsObject().AddObject(key).ToDynamic()
@@ -194,6 +199,7 @@ Public Structure JsonDynamic
 	''' <param name="key">Key under which is member stored.</param>
 	''' <param name="defaultValue">Default value returned in case no such member exists.</param>
 	''' <returns>Value stored under given key as dynamic.</returns>
+	''' <exception cref="ArgumentNullException"><paramref name="key" /> is null.</exception>
 	''' <exception cref="InvalidCastException">If this dynamic object does not wrap JsonObject.</exception>
 	Public Function GetOrDefault(key As String, Optional defaultValue As JsonValue = Nothing) As JsonDynamic
 		Dim result As JsonValue = Nothing
@@ -217,6 +223,7 @@ Public Structure JsonDynamic
 	''' <param name="key">Key under which is member stored.</param>
 	''' <param name="defaultValue">Default value returned in case no such member exists.</param>
 	''' <returns>Value stored under given key as dynamic.</returns>
+	''' <exception cref="ArgumentNullException"><paramref name="key" /> is Nothing.</exception>
 	''' <exception cref="InvalidCastException">If this dynamic object does not wrap JsonObject.</exception>
 	Public Function GetOrDefault(key As String, defaultValue As JsonDynamic) As JsonDynamic
 		Dim result As JsonValue = Nothing
@@ -238,6 +245,7 @@ Public Structure JsonDynamic
 	''' </summary>
 	''' <param name="key">Key under which is array stored.</param>
 	''' <returns>Value stored under given key casted to dynamic.</returns>
+	''' <exception cref="ArgumentNullException"><paramref name="key" /> is Nothing.</exception>
 	''' <exception cref="InvalidCastException">If this dynamic object does not wrap JsonObject.</exception>
 	Public Function GetOrAdd(key As String, addValue As JsonDynamic) As JsonDynamic
 		Dim value As JsonValue = Nothing
@@ -260,6 +268,7 @@ Public Structure JsonDynamic
 	''' </summary>
 	''' <param name="key">Key under which is array stored.</param>
 	''' <returns>Value stored under given key casted to dynamic.</returns>
+	''' <exception cref="ArgumentNullException"><paramref name="key" /> is Nothing.</exception>
 	''' <exception cref="InvalidCastException">If this dynamic object does not wrap JsonObject.</exception>
 	Public Function GetOrAdd(key As String, addValue As JsonValue) As JsonDynamic
 		Dim value As JsonValue = Nothing
@@ -282,6 +291,7 @@ Public Structure JsonDynamic
 	''' the property which might be null.
 	''' </summary>
 	''' <returns>True if given property is defined in the object.</returns>
+	''' <exception cref="ArgumentNullException"><paramref name="key" /> is null.</exception>
 	''' <exception cref="InvalidCastException">If this dynamic object does not wrap JsonObject.</exception>
 	Public Function ContainsKey(key As String) As Boolean
 		If Me._value Is Nothing Then
@@ -297,6 +307,7 @@ Public Structure JsonDynamic
 	''' </summary>
 	''' <returns>True if Me(key) exists and is not null.</returns>
 	''' <remarks>Equivalent to Me.ContainsKey(key) AndAlso Me(key) IsNot Nothing.</remarks>
+	''' <exception cref="ArgumentNullException"><paramref name="key" /> is null.</exception>
 	''' <exception cref="InvalidCastException">If this dynamic object does not wrap JsonObject.</exception>
 	Public Function ContainsKeyNotNull(key As String) As Boolean
 		If Me._value Is Nothing Then
@@ -340,8 +351,8 @@ Public Structure JsonDynamic
 	''' Inserts an value into the array at the specified index.
 	''' </summary>
 	''' <exception cref="ArgumentOutOfRangeException">
-	''' index is less than 0 or index is greater than Count.
-	''' </exception> 
+	''' <paramref name="index" /> is less than 0 or is equal or more than <see cref="Count" />.
+	''' </exception>
 	Public Sub Insert(index As Integer, item As JsonValue)
 		If Me._value Is Nothing Then
 			ThrowHelper.ThrowNullDynamicCasted()
@@ -355,8 +366,8 @@ Public Structure JsonDynamic
 	''' Inserts the values of a collection into the array at the specified index.
 	''' </summary>
 	''' <exception cref="ArgumentOutOfRangeException">
-	''' index is less than 0 or index is greater than Count.
-	''' </exception> 
+	''' <paramref name="index" /> is less than 0 or is equal or more than <see cref="Count" />.
+	''' </exception>
 	Public Sub InsertRange(index As Integer, items As IEnumerable(Of JsonValue))
 		If Me._value Is Nothing Then
 			ThrowHelper.ThrowNullDynamicCasted()
@@ -381,7 +392,7 @@ Public Structure JsonDynamic
 		End If
 
 		Dim array = Me._value.AsArray()
-		If index >= array.Count Then
+		If index < 0 OrElse index >= array.Count Then
 			Return defaultValue.ToDynamic()
 		Else
 			Return array(index).ToDynamic()
@@ -404,7 +415,7 @@ Public Structure JsonDynamic
 		End If
 
 		Dim array = Me._value.AsArray()
-		If index >= array.Count Then
+		If index < 0 OrElse index >= array.Count Then
 			Return defaultValue
 		Else
 			Return array(index).ToDynamic()
