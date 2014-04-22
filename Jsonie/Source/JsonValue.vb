@@ -65,6 +65,49 @@ Public MustInherit Class JsonValue
 		End Get
 	End Property
 
+
+	''' <summary>
+	''' Converts object to matching JsonValue. 
+	''' 
+	''' Supports conversion of numbers, strings and dates including nullable versions.
+	''' </summary>
+	''' <exception cref="InvalidCastException">Thrown when object being converted is not supported.</exception>
+	''' <param name="obj">Object to convert.</param>
+	''' <returns>Object wrapped as JSON value.</returns>
+	Public Shared Function [From](obj As Object) As JsonValue
+		If obj Is Nothing Then
+			Return Nothing
+
+		ElseIf TypeOf obj Is JsonValue Then
+			Return CType(obj, JsonValue)
+
+		ElseIf TypeOf obj Is Boolean OrElse TypeOf obj Is Boolean? Then
+			Return If(CType(obj, Boolean), JsonBool.True, JsonBool.False)
+
+		ElseIf TypeOf obj Is Integer OrElse TypeOf obj Is Integer? Then
+			Return New JsonNumber(CType(obj, Integer))
+
+		ElseIf TypeOf obj Is Decimal OrElse TypeOf obj Is Decimal? Then
+			Return New JsonNumber(CType(obj, Decimal))
+
+		ElseIf TypeOf obj Is Long OrElse TypeOf obj Is Long? Then
+			Return New JsonNumber(CType(obj, Long))
+
+		ElseIf TypeOf obj Is Single OrElse TypeOf obj Is Single? Then
+			Return New JsonNumber(CType(obj, Single))
+
+		ElseIf TypeOf obj Is Double OrElse TypeOf obj Is Double? Then
+			Return New JsonNumber(CType(obj, Double))
+
+		ElseIf TypeOf obj Is String Then
+			Return New JsonString(CType(obj, String))
+
+		Else
+			Throw New InvalidCastException(String.Format("Cannot convert object of type {0} to JsonValue.", obj.GetType()))
+
+		End If
+	End Function
+
 #Region "Operators"
 
 	Public Shared Widening Operator CType(text As String) As JsonValue
