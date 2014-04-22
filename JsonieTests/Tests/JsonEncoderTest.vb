@@ -131,15 +131,57 @@ Public Class JsonEncoderTest
 
 	<TestMethod()>
 	Public Sub Encode_EscapeCharacters_ReturnsCorrectJson()
-		Dim escapeSeqs = {"\""", "\\", "\/", "\b", "\f", "\n", "\r", "\t", "\u1234"}
+		Dim escapeSeqs = {"\""", "\", "\/", "\b", "\f", "\n", "\r", "\t", "\u1234", "\u0000"}
 
 		For Each escapeSeq In escapeSeqs
 			Dim commonValue = escapeSeq
-			Dim expectedValue = commonValue.Replace("\", "\\").Replace("""", "\""")
+			Dim expectedValue = commonValue.Replace("\", "\\").Replace("""", "\""").Replace("/", "\/")
 			Dim value = New JsonString(commonValue)
 
 			Dim jsonString = JsonParser.Encode(value)
 			Assert.AreEqual(Me.Quote(expectedValue), jsonString)
+		Next
+	End Sub
+
+
+	<TestMethod()>
+	Public Sub Encode_ControlCharacters()
+		' json -> control char
+		Dim controlSeqs = New Dictionary(Of String, String)
+		controlSeqs("\""") = """"
+		controlSeqs("\\") = "\"
+		controlSeqs("\b") = vbBack
+		controlSeqs("\f") = vbFormFeed
+		controlSeqs("\n") = vbLf
+		controlSeqs("\r") = vbCr
+		controlSeqs("\t") = vbTab
+		controlSeqs("\u0000") = vbNullChar
+
+		For Each controlChar In controlSeqs
+			Dim value = New JsonString(controlChar.Value)
+
+			Dim jsonString = JsonParser.Encode(value)
+			Assert.AreEqual(Me.Quote(controlChar.Key), jsonString)
+		Next
+
+		' c0 and c1 sets
+		Dim offsets = {0, 128}
+
+		For Each offset In offsets
+			For charIndex = offset To offset + 31
+				Dim curChar As Char = ChrW(charIndex)
+
+				If curChar = """" OrElse curChar = vbBack OrElse curChar = vbFormFeed OrElse curChar = vbLf OrElse curChar = vbCr OrElse curChar = vbTab OrElse curChar = " " Then
+					' encoder may use shorter representation (e.g. "\b" for backspace)
+					Continue For
+				End If
+
+				Dim expectedValue = "\u" & charIndex.ToString("X4")
+				Dim value = New JsonString(curChar)
+
+				Dim jsonString = JsonParser.Encode(value)
+				Assert.AreEqual(Me.Quote(expectedValue), jsonString)
+			Next
 		Next
 	End Sub
 

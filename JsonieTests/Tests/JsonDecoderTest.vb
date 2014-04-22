@@ -89,7 +89,7 @@ Public Class JsonDecoderTest
 	<TestMethod()>
 	Public Sub Decode_String_ReturnsCorrectObject()
 		Dim valueExpected = New JsonString("Hello World!")
-		Dim valueDecoded = JsonParser.Decode("""Hello World!""")
+		Dim valueDecoded = JsonParser.Decode(Me.Quote("Hello World!"))
 
 		Assert.AreEqual(valueExpected, valueDecoded)
 	End Sub
@@ -98,7 +98,7 @@ Public Class JsonDecoderTest
 	<TestMethod()>
 	Public Sub Decode_EmptyString_ReturnsCorrectObject()
 		Dim valueExpected = New JsonString(String.Empty)
-		Dim valueDecoded = JsonParser.Decode("""""")
+		Dim valueDecoded = JsonParser.Decode(Me.Quote(String.Empty))
 
 		Assert.AreEqual(valueExpected, valueDecoded)
 	End Sub
@@ -115,12 +115,50 @@ Public Class JsonDecoderTest
 
 	<TestMethod()>
 	Public Sub Decode_EscapeCharacters_ReturnsCorrectObject()
-		Dim escapeSeqs = {"\""", "\\", "\/", "\b", "\f", "\n", "\r", "\t", "\u1234"}
+		Dim escapeSeqs = {"\""", "\\", "\/", "\b", "\f", "\n", "\r", "\t", "\u0000", "\u1234"}
 
 		For Each escapeSeq In escapeSeqs
 			Dim valueExpected = New JsonString(escapeSeq)
 
-			Dim escapedSeq = """" & escapeSeq.Replace("\", "\\").Replace("""", "\""") & """"
+			Dim escapedSeq = Me.Quote(escapeSeq.Replace("\", "\\").Replace("""", "\"""))
+			Dim valueDecoded = JsonParser.Decode(escapedSeq)
+
+			Assert.AreEqual(valueExpected, valueDecoded)
+		Next
+	End Sub
+
+
+	<TestMethod()>
+	Public Sub Decode_ControlCharacters()
+		' json -> control char
+		Dim controlSeqs = New Dictionary(Of String, String)
+		controlSeqs("\""") = """"
+		controlSeqs("\\") = "\"
+		controlSeqs("\b") = vbBack
+		controlSeqs("\f") = vbFormFeed
+		controlSeqs("\n") = vbLf
+		controlSeqs("\r") = vbCr
+		controlSeqs("\t") = vbTab
+		controlSeqs("\u0000") = vbNullChar
+		controlSeqs("\u1234") = ChrW(4660)
+
+		For Each controlSeq In controlSeqs
+			Dim valueExpected = New JsonString(controlSeq.Value)
+
+			Dim escapedSeq = Me.Quote(controlSeq.Key)
+			Dim valueDecoded = JsonParser.Decode(escapedSeq)
+
+			Assert.AreEqual(valueExpected, valueDecoded)
+		Next
+	End Sub
+
+
+	<TestMethod()>
+	Public Sub Decode_First2049Chars_Hexescaped()
+		For controlChar = 0 To 2048
+			Dim valueExpected = New JsonString(ChrW(controlChar))
+
+			Dim escapedSeq = Me.Quote("\u" & controlChar.ToString("X4"))
 			Dim valueDecoded = JsonParser.Decode(escapedSeq)
 
 			Assert.AreEqual(valueExpected, valueDecoded)
@@ -228,6 +266,19 @@ Public Class JsonDecoderTest
 	End Sub
 
 #End Region
+
+	''' <summary>
+	''' Returns text quoted by " characters both at start and end. No escapes.
+	''' </summary>
+	''' <param name="text">Text to quote.</param>
+	''' <returns>Quoted text.</returns>
+	Private Function Quote(text As String) As String
+		If text Is Nothing Then
+			Return Nothing
+		End If
+
+		Return """" & text & """"
+	End Function
 
 End Class
 
