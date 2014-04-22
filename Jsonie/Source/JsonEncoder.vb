@@ -169,16 +169,24 @@ Public Class JsonEncoder
 		Static charLf As Char = CChar(vbLf)
 		Static charCr As Char = CChar(vbCr)
 		Static charTab As Char = CChar(vbTab)
+		Static charBackspace As Char = CChar(vbBack)
+		Static charFormFeed As Char = CChar(vbFormFeed)
+		Static charSolidus As Char = "/"c
 
 		Dim thisCharAsString As String = Nothing
+		Dim curChar As Char = Nothing
 
 		For index = 0 To text.Length - 1
-			Select Case text(index)
+			curChar = text(index)
+			Select Case curChar
 				Case "\"c
 					Me.writer.Write("\\")
 
 				Case """"c
 					Me.writer.Write("\""")
+
+				Case "/"c
+					Me.writer.Write("\/")
 
 				Case charLf
 					Me.writer.Write("\n")
@@ -189,10 +197,20 @@ Public Class JsonEncoder
 				Case charTab
 					Me.writer.Write("\t")
 
-				Case Else
-					thisCharAsString = text(index)
-					Me.writer.Write(thisCharAsString)
+				Case charFormFeed
+					Me.writer.Write("\f")
 
+				Case charBackspace
+					Me.writer.Write("\b")
+
+				Case Else
+					' escape control characters
+					If Char.IsControl(curChar) Then
+						Me.writer.Write("\u" & AscW(curChar).ToString("X4"))
+					Else
+						thisCharAsString = text(index)
+						Me.writer.Write(thisCharAsString)
+					End If
 			End Select
 		Next
 
