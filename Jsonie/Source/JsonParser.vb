@@ -34,9 +34,9 @@ Public Class JsonParser
 	''' <returns>Decoded JSON value.</returns>
 	''' <exception cref="JsonFormatException">When json string is invalid.</exception>
 	Public Shared Function Decode(stream As Stream, Optional options As JsonDecoderOptions = Nothing) As JsonValue
-		Using reader = New StreamReader(stream)
-			Return Decode(reader, options)
-		End Using
+		' don't use using as we don't want to close given stream which we do not own
+		Dim reader = New StreamReader(stream)
+		Return Decode(reader, options)
 	End Function
 
 
@@ -88,9 +88,11 @@ Public Class JsonParser
 	''' <param name="options">Encoder options.</param>
 	Public Shared Sub Encode(value As JsonValue, stream As Stream, Optional options As JsonEncoderOptions = Nothing)
 		Dim utf8WithoutBom = New System.Text.UTF8Encoding(False)
-		Using writer = New StreamWriter(stream, utf8WithoutBom)
-			Encode(value, writer, options)
-		End Using
+
+		' don't use using as we don't want to close given stream which we do not own
+		Dim writer = New StreamWriter(stream, utf8WithoutBom)
+		Encode(value, writer, options)
+		writer.Flush()
 	End Sub
 
 
