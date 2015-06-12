@@ -1,4 +1,4 @@
-﻿Imports Microsoft.VisualStudio.TestTools.UnitTesting
+﻿Imports NUnit.Framework
 Imports Dextronet.Jsonie
 
 
@@ -6,12 +6,12 @@ Imports Dextronet.Jsonie
 '''This is a test class for JsonStringTest and is intended
 '''to contain all JsonStringTest Unit Tests
 '''</summary>
-<TestClass()>
+<TestFixture()>
 Public Class JsonStringTest
 
 #Region "Operators"
 
-	<TestMethod()>
+	<Test()>
 	Public Sub Cast_NullToString_ReturnsNull()
 		Dim value As JsonString = Nothing
 		Dim castedValue As String = value

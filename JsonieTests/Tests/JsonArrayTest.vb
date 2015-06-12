@@ -1,6 +1,6 @@
 ﻿Imports System.Collections
 Imports System.Collections.Generic
-Imports Microsoft.VisualStudio.TestTools.UnitTesting
+Imports NUnit.Framework
 Imports Dextronet.Jsonie
 
 
@@ -8,7 +8,7 @@ Imports Dextronet.Jsonie
 '''This is a test class for JsonArrayTest and is intended
 '''to contain all JsonArrayTest Unit Tests
 '''</summary>
-<TestClass()>
+<TestFixture()>
 Public Class JsonArrayTest
 
 End Class
