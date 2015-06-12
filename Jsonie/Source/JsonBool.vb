@@ -2,6 +2,7 @@
 ''' Represents JSON boolean values.
 ''' </summary>
 ''' <remarks>Immutable</remarks>
+<DebuggerDisplay("JsonBool: Value = {Value}")>
 Public Class JsonBool
 	Inherits JsonValue
 
@@ -30,7 +31,7 @@ Public Class JsonBool
 	''' <summary>
 	''' Creates new JSON representation of the boolean.
 	''' </summary>
-	Friend Sub New(value As Boolean)
+	Public Sub New(value As Boolean)
 		Me._value = value
 	End Sub
 

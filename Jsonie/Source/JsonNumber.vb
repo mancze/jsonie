@@ -1,9 +1,11 @@
 ﻿Imports System.Globalization
 
+
 ''' <summary>
 ''' Represents JSON numeric value.
 ''' </summary>
 ''' <remarks>Immutable</remarks>
+<DebuggerDisplay("JsonNumber: Value = {DecimalValue}")>
 Public Class JsonNumber
 	Inherits JsonValue
 

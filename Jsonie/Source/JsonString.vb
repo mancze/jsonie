@@ -2,6 +2,7 @@
 ''' Represents JSON string. Internal value is never null.
 ''' </summary>
 ''' <remarks>Immutable</remarks>
+<DebuggerDisplay("JsonString: Value = {Value}")>
 Public Class JsonString
 	Inherits JsonValue
 

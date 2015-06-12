@@ -1,5 +1,4 @@
-﻿Imports System.ComponentModel
-
+﻿<DebuggerDisplay("JsonObject: Count = {Count}")>
 Public Class JsonObject
 	Inherits JsonValue
 	Implements IDictionary(Of String, JsonValue)

@@ -1,7 +1,4 @@
-﻿Imports System.Globalization
-
-
-''' <summary>
+﻿''' <summary>
 ''' Base class for all JSON types except null which is represented also as null in .NET.
 ''' </summary>
 Public MustInherit Class JsonValue

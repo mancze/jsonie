@@ -1,6 +1,7 @@
 ﻿''' <summary>
 ''' Represents Json array.
 ''' </summary>
+<DebuggerDisplay("JsonArray: Count = {Count}")>
 Public Class JsonArray
 	Inherits JsonValue
 	Implements IList(Of JsonValue)
