@@ -5,4 +5,4 @@ install:
   - nuget install NUnit.Runners -Version 2.6.4 -OutputDirectory testrunner
 script:
   - xbuild Jsonie.sln
-  - mono ./testrunner/NUnit.Runners.2.6.4/tools/nunit-console.exe ./JsonieTests/bin/Release/Jsonie.Tests.dll
+  - mono ./testrunner/NUnit.Runners.2.6.4/tools/nunit-console.exe ./Jsonie.Tests/bin/Release/Jsonie.Tests.dll
