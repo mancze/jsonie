@@ -6,7 +6,6 @@
 ''' </summary>
 Public Structure JsonDynamic
 
-
 	''' <summary>
 	''' Tests if this is null JSON object.
 	''' </summary>
@@ -151,8 +150,6 @@ Public Structure JsonDynamic
 	''' <summary>
 	''' Creates new dynamic wrapper around any JsonValue (null accepted).
 	''' </summary>
-	''' <param name="value"></param>
-	''' <remarks></remarks>
 	Public Sub New(value As JsonValue)
 		Me._value = value
 	End Sub
@@ -424,7 +421,15 @@ Public Structure JsonDynamic
 
 #End Region
 
-#Region "ToString(), GetHashCode(), Equals()"
+	''' <summary>
+	''' Gets to JSON encoded string representing this object.
+	''' </summary>
+	''' <returns>JSON string</returns>
+	Public Function ToJson() As String
+		Return JsonParser.Encode(Me._value, JsonEncoderOptions.ToStringDefault)
+	End Function
+
+#Region "GetHashCode(), Equals()"
 
 	Public Overrides Function Equals(obj As Object) As Boolean
 		If TypeOf obj Is JsonDynamic Then
@@ -474,11 +479,6 @@ Public Structure JsonDynamic
 		Else
 			Return Me._value.GetHashCode()
 		End If
-	End Function
-
-
-	Public Overrides Function ToString() As String
-		Return JsonParser.Encode(Me._value, JsonEncoderOptions.ToStringDefault)
 	End Function
 
 #End Region

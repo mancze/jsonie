@@ -487,12 +487,7 @@ Public Class JsonObject
 
 #End Region
 
-#Region "ToString(), GetHashCode(), Equals()"
-
-	Public Overrides Function ToString() As String
-		Return JsonParser.Encode(Me, JsonEncoderOptions.ToStringDefault)
-	End Function
-
+#Region "GetHashCode(), Equals()"
 
 	Public Overrides Function GetHashCode() As Integer
 		Return Me.data.GetHashCode()

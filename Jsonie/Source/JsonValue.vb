@@ -108,6 +108,15 @@ Public MustInherit Class JsonValue
 		End If
 	End Function
 
+
+	''' <summary>
+	''' Gets to JSON encoded string representing this object.
+	''' </summary>
+	''' <returns>JSON string</returns>
+	Public Function ToJson() As String
+		Return JsonParser.Encode(Me, JsonEncoderOptions.Default)
+	End Function
+
 #Region "Operators"
 
 	Public Shared Widening Operator CType(text As String) As JsonValue
