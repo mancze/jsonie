@@ -12,7 +12,7 @@ Imports System.Runtime.InteropServices
 <Assembly: AssemblyDescription("Json Data Encoding/Decoding Framework")> 
 <Assembly: AssemblyCompany("Dextronet")> 
 <Assembly: AssemblyProduct("Jsonie")> 
-<Assembly: AssemblyCopyright("Copyright (c) 2014 Michal Novák, Dextronet")> 
+<Assembly: AssemblyCopyright("Copyright © 2014 Michal Novák, Dextronet")> 
 <Assembly: AssemblyTrademark("")> 
 
 <Assembly: ComVisible(False)>
