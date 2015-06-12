@@ -1,4 +1,4 @@
-﻿Imports Microsoft.VisualStudio.TestTools.UnitTesting
+﻿Imports NUnit.Framework
 Imports Dextronet.Jsonie
 Imports System.Text.RegularExpressions
 Imports System.Globalization
@@ -8,12 +8,12 @@ Imports System.Globalization
 '''This is a test class for JsonEncoder and is intended
 '''to contain all JsonBoolTest Unit Tests
 '''</summary>
-<TestClass()>
+<TestFixture()>
 Public Class JsonEncoderTest
 
 #Region "Encode Null Tests"
 
-	<TestMethod()>
+	<Test()>
 	Public Sub Encode_Null_ReturnsCorrectJson()
 		Dim nullValue As JsonValue = Nothing
 
@@ -22,7 +22,7 @@ Public Class JsonEncoderTest
 	End Sub
 
 
-	<TestMethod()>
+	<Test()>
 	Public Sub Encode_BoolNull_ReturnsCorrectJson()
 		Dim nullValue As JsonBool = Nothing
 
@@ -34,7 +34,7 @@ Public Class JsonEncoderTest
 
 #Region "Encode Bool Tests"
 
-	<TestMethod()>
+	<Test()>
 	Public Sub Encode_True_ReturnsCorrectJson()
 		Dim value = JsonBool.True
 
@@ -43,7 +43,7 @@ Public Class JsonEncoderTest
 	End Sub
 
 
-	<TestMethod()>
+	<Test()>
 	Public Sub Encode_False_ReturnsCorrectJson()
 		Dim value = JsonBool.False
 
@@ -55,7 +55,7 @@ Public Class JsonEncoderTest
 
 #Region "Encode Number Tests"
 
-	<TestMethod()>
+	<Test()>
 	Public Sub Encode_PositiveInteger_ReturnsCorrectJson()
 		Dim intValue = 42
 		Dim value = New JsonNumber(42)
@@ -65,7 +65,7 @@ Public Class JsonEncoderTest
 	End Sub
 
 
-	<TestMethod()>
+	<Test()>
 	Public Sub Encode_NegativeInteger_ReturnsCorrectJson()
 		Dim commonValue = -42
 		Dim value = New JsonNumber(commonValue)
@@ -75,7 +75,7 @@ Public Class JsonEncoderTest
 	End Sub
 
 
-	<TestMethod()>
+	<Test()>
 	Public Sub Encode_Double_ReturnsCorrectJson()
 		Dim commonValue = -123456987.987R
 		Dim value = New JsonNumber(commonValue)
@@ -85,7 +85,7 @@ Public Class JsonEncoderTest
 	End Sub
 
 
-	<TestMethod()>
+	<Test()>
 	Public Sub Encode_Decimal_ReturnsCorrectJson()
 		Dim commonValue = 123456789.987654321D
 		Dim value = New JsonNumber(commonValue)
@@ -98,7 +98,7 @@ Public Class JsonEncoderTest
 
 #Region "Encode String Tests"
 
-	<TestMethod()>
+	<Test()>
 	Public Sub Encode_String_ReturnsCorrectJson()
 		Dim commonValue = "Hello World!"
 		Dim value = New JsonString(commonValue)
@@ -108,7 +108,7 @@ Public Class JsonEncoderTest
 	End Sub
 
 
-	<TestMethod()>
+	<Test()>
 	Public Sub Encode_EmptyString_ReturnsCorrectJson()
 		Dim commonValue = String.Empty
 		Dim value = New JsonString(commonValue)
@@ -118,7 +118,7 @@ Public Class JsonEncoderTest
 	End Sub
 
 
-	<TestMethod()>
+	<Test()>
 	Public Sub Encode_EscapableString_ReturnsCorrectJson()
 		Dim commonValue = "Hello ""World""! Two revers solidus go here \\"
 		Dim expectedValue = "Hello \""World\""! Two revers solidus go here \\\\"
@@ -129,7 +129,7 @@ Public Class JsonEncoderTest
 	End Sub
 
 
-	<TestMethod()>
+	<Test()>
 	Public Sub Encode_EscapeCharacters_ReturnsCorrectJson()
 		Dim escapeSeqs = {"\""", "\", "\/", "\b", "\f", "\n", "\r", "\t", "\u1234", "\u0000"}
 
@@ -144,7 +144,7 @@ Public Class JsonEncoderTest
 	End Sub
 
 
-	<TestMethod()>
+	<Test()>
 	Public Sub Encode_ControlCharacters()
 		' json -> control char
 		Dim controlSeqs = New Dictionary(Of String, String)
@@ -186,7 +186,7 @@ Public Class JsonEncoderTest
 	End Sub
 
 
-	<TestMethod()>
+	<Test()>
 	Public Sub Encode_MultilineStringCrLf_ReturnsCorrectJson()
 		Dim words = "Hello World Each Word Is On Separate Line"
 		Dim multilineText = words.Replace(" ", vbCrLf)
@@ -199,7 +199,7 @@ Public Class JsonEncoderTest
 	End Sub
 
 
-	<TestMethod()>
+	<Test()>
 	Public Sub Encode_MultilineStringCr_ReturnsCorrectJson()
 		Dim words = "Hello World Each Word Is On Separate Line"
 		Dim multilineText = words.Replace(" ", vbCr)
@@ -212,7 +212,7 @@ Public Class JsonEncoderTest
 	End Sub
 
 
-	<TestMethod()>
+	<Test()>
 	Public Sub Encode_MultilineStringLf_ReturnsCorrectJson()
 		Dim words = "Hello World Each Word Is On Separate Line"
 		Dim multilineText = words.Replace(" ", vbLf)
@@ -228,7 +228,7 @@ Public Class JsonEncoderTest
 
 #Region "Encode Array Tests"
 
-	<TestMethod()>
+	<Test()>
 	Public Sub Encode_EmptyArray_ReturnsCorrectJson()
 		Dim value = New JsonArray()
 
@@ -237,7 +237,7 @@ Public Class JsonEncoderTest
 	End Sub
 
 
-	<TestMethod()>
+	<Test()>
 	Public Sub Encode_SimpleArray_ReturnsCorrectJson()
 		Dim value = New JsonArray()
 		value.Add("Hello World!")
@@ -257,7 +257,7 @@ Public Class JsonEncoderTest
 
 #Region "Encode Object Tests"
 
-	<TestMethod()>
+	<Test()>
 	Public Sub Encode_EmptyObject_ReturnsCorrectJson()
 		Dim value = New JsonObject()
 
@@ -266,7 +266,7 @@ Public Class JsonEncoderTest
 	End Sub
 
 
-	<TestMethod()>
+	<Test()>
 	Public Sub Encode_SimpleObject_ReturnsCorrectJson()
 		Dim value = New JsonObject()
 		value("string") = "Hello World!"

@@ -8,6 +8,10 @@
 *.sln.docstates
 *.testsettings
 
+#NuGet
+Vendor
+!Vendor/repositories.config
+
 # Build results
 [Dd]ebug/
 [Dd]ebugPublic/
