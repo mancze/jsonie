@@ -70,7 +70,22 @@ Public Class JsonNumber
 	End Sub
 
 
+	Public Sub New(value As Integer)
+		Me._decimalValue = value
+	End Sub
+
+
+	Public Sub New(value As Long)
+		Me._decimalValue = value
+	End Sub
+
+
 	Public Sub New(value As Double)
+		Me._decimalValue = Convert.ToDecimal(value, CultureInfo.InvariantCulture)
+	End Sub
+
+
+	Public Sub New(value As Single)
 		Me._decimalValue = Convert.ToDecimal(value, CultureInfo.InvariantCulture)
 	End Sub
 
