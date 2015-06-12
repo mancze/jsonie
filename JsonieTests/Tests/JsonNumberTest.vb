@@ -1,5 +1,5 @@
 ﻿Imports System
-Imports Microsoft.VisualStudio.TestTools.UnitTesting
+Imports NUnit.Framework
 Imports Dextronet.Jsonie
 
 
@@ -7,6 +7,6 @@ Imports Dextronet.Jsonie
 '''This is a test class for JsonNumberTest and is intended
 '''to contain all JsonNumberTest Unit Tests
 '''</summary>
-<TestClass()>
+<TestFixture()>
 Public Class JsonNumberTest
 End Class

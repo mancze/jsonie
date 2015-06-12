@@ -1,4 +1,4 @@
-﻿Imports Microsoft.VisualStudio.TestTools.UnitTesting
+﻿Imports NUnit.Framework
 Imports Dextronet.Jsonie
 
 
@@ -6,12 +6,12 @@ Imports Dextronet.Jsonie
 '''This is a test class for JsonBool and is intended
 '''to contain all JsonBool Unit Tests
 '''</summary>
-<TestClass()>
+<TestFixture()>
 Public Class JsonBoolTest
 
 #Region "Operators"
 
-	<TestMethod()>
+	<Test()>
 	Public Sub Cast_NullToBool_ReturnsNull()
 		Dim value As JsonBool = Nothing
 		Dim castedValue As Boolean = value
