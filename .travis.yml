@@ -4,5 +4,5 @@ install:
   - nuget restore Jsonie.sln
   - nuget install NUnit.Runners -Version 2.6.4 -OutputDirectory testrunner
 script:
-  - xbuild Jsonie.sln
+  - xbuild /verbosity:diagnostic Jsonie.sln
   - mono ./testrunner/NUnit.Runners.2.6.4/tools/nunit-console.exe ./Jsonie.Tests/bin/Release/Jsonie.Tests.dll
