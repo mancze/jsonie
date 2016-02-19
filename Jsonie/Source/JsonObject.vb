@@ -73,7 +73,7 @@ Public Class JsonObject
 
 
 	''' <summary>
-	''' Adds an blank array property and returns it's instance.
+	''' Adds an blank array property and returns its instance.
 	''' </summary>
 	''' <exception cref="ArgumentNullException"><paramref name="key" /> is null.</exception>
 	''' <exception cref="ArgumentException">An property with the same <paramref name="key" /> already exists.</exception>
@@ -83,7 +83,7 @@ Public Class JsonObject
 
 
 	''' <summary>
-	''' Adds an blank object property and returns it's instance.
+	''' Adds an blank object property and returns its instance.
 	''' </summary>
 	''' <exception cref="ArgumentNullException"><paramref name="key" /> is null.</exception>
 	''' <exception cref="ArgumentException">An property with the same <paramref name="key" /> already exists.</exception>

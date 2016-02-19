@@ -83,6 +83,26 @@ Public Class JsonArray
 
 
 	''' <summary>
+	''' Adds an empty array and returns its instance.
+	''' </summary>
+	Public Function AddArray() As JsonArray
+		Dim array = New JsonArray()
+		Me.Add(array)
+		Return array
+	End Function
+
+
+	''' <summary>
+	''' Adds an empty object and returns its instance.
+	''' </summary>
+	Public Function AddObject() As JsonObject
+		Dim obj = New JsonObject()
+		Me.Add(obj)
+		Return obj
+	End Function
+
+
+	''' <summary>
 	''' Inserts an value into the array at the specified index.
 	''' </summary>
 	''' <exception cref="ArgumentOutOfRangeException">
@@ -102,6 +122,32 @@ Public Class JsonArray
 	Public Sub InsertRange(index As Integer, items As IEnumerable(Of JsonValue))
 		Me.data.InsertRange(index, items)
 	End Sub
+
+
+	''' <summary>
+	''' Inserts an empty array at the specified index and returns its instance.
+	''' </summary>
+	''' <exception cref="ArgumentOutOfRangeException">
+	''' <paramref name="index" /> is less than 0 or is equal or more than <see cref="Count" />.
+	''' </exception>
+	Public Function InsertArray(index As Integer) As JsonArray
+		Dim array = New JsonArray()
+		Me.Insert(index, array)
+		Return array
+	End Function
+
+
+	''' <summary>
+	''' Adds an empty object at the specified index  and returns its instance.
+	''' </summary>
+	''' <exception cref="ArgumentOutOfRangeException">
+	''' <paramref name="index" /> is less than 0 or is equal or more than <see cref="Count" />.
+	''' </exception>
+	Public Function InsertObject(index As Integer) As JsonObject
+		Dim obj = New JsonObject()
+		Me.Insert(index, obj)
+		Return obj
+	End Function
 
 
 	''' <summary>
