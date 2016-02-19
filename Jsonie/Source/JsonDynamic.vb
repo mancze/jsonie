@@ -37,7 +37,7 @@ Public Structure JsonDynamic
 
 
 	''' <summary>
-	''' Tests if this is not JSON object nor array.
+	''' Tests if this is JSON string or number or boolean or null.
 	''' </summary>
 	Public ReadOnly Property IsScalar As Boolean
 		Get

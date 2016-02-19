@@ -24,7 +24,7 @@ Public MustInherit Class JsonValue
 
 
 	''' <summary>
-	''' Tests if this is not JSON object nor array.
+	''' Tests if this is JSON string or number or boolean.
 	''' </summary>
 	Public ReadOnly Property IsScalar As Boolean
 		Get
