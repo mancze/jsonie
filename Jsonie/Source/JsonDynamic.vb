@@ -1,6 +1,7 @@
 ﻿''' <summary>
 ''' Dynamic wrapper around any JsonValue.
 ''' </summary>
+<DebuggerDisplay("JsonDynamic: Value = {Value}")>
 Public Structure JsonDynamic
 
 	''' <summary>
