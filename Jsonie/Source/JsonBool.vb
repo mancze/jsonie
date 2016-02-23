@@ -137,9 +137,9 @@ Public Class JsonBool
 	''' </summary>
 	''' <param name="value">The value to convert.</param>
 	''' <returns>The <see cref="Boolean" /> casted from the specified value.</returns>
-	Public Overloads Shared Widening Operator CType(value As JsonBool) As Boolean
+	Public Overloads Shared Widening Operator CType(value As JsonBool) As Boolean?
 		If value Is Nothing Then
-			Return False
+			Return Nothing
 		End If
 
 		Return value.Value

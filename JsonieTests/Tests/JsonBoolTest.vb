@@ -14,9 +14,9 @@ Public Class JsonBoolTest
 	<Test()>
 	Public Sub Cast_NullToBool_ReturnsNull()
 		Dim value As JsonBool = Nothing
-		Dim castedValue As Boolean = value
+		Dim castedValue As Boolean? = value
 
-		Assert.AreEqual(False, castedValue)
+		Assert.AreEqual(Nothing, castedValue)
 	End Sub
 
 #End Region
