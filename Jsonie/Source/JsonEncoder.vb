@@ -104,7 +104,7 @@ Public Class JsonEncoder
 	''' </summary>
 	''' <param name="number">JSON number to write.</param>
 	Private Sub WriteNumber(number As JsonNumber)
-		Me._writer.Write(number.DecimalValue.ToString(CultureInfo.InvariantCulture))
+		Me._writer.Write(number.Value.ToString(CultureInfo.InvariantCulture))
 	End Sub
 
 

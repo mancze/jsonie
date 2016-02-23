@@ -13,12 +13,12 @@ Public Class JsonNumber
 	''' <summary>
 	''' Gets the decimal value.
 	''' </summary>
-	Public ReadOnly Property DecimalValue As Decimal
+	Public ReadOnly Property Value As Decimal
 		Get
-			Return _decimalValue
+			Return _value
 		End Get
 	End Property
-	Private ReadOnly _decimalValue As Decimal
+	Private ReadOnly _value As Decimal
 
 
 	''' <summary>
@@ -27,7 +27,7 @@ Public Class JsonNumber
 	''' <exception cref="OverflowException">When accessing value which is out of Integer bounds.</exception>
 	Public ReadOnly Property IntegerValue As Integer
 		Get
-			Return Convert.ToInt32(_decimalValue, CultureInfo.InvariantCulture)
+			Return Convert.ToInt32(_value, CultureInfo.InvariantCulture)
 		End Get
 	End Property
 
@@ -38,7 +38,7 @@ Public Class JsonNumber
 	''' <exception cref="OverflowException">When accessing value which is out of Long bounds.</exception>
 	Public ReadOnly Property LongValue As Long
 		Get
-			Return Convert.ToInt64(_decimalValue, CultureInfo.InvariantCulture)
+			Return Convert.ToInt64(_value, CultureInfo.InvariantCulture)
 		End Get
 	End Property
 
@@ -49,7 +49,7 @@ Public Class JsonNumber
 	''' <exception cref="OverflowException">When accessing value which is out of Single bounds.</exception>
 	Public ReadOnly Property SingleValue As Single
 		Get
-			Return Convert.ToSingle(_decimalValue, CultureInfo.InvariantCulture)
+			Return Convert.ToSingle(_value, CultureInfo.InvariantCulture)
 		End Get
 	End Property
 
@@ -60,7 +60,7 @@ Public Class JsonNumber
 	''' <exception cref="OverflowException">When accessing value which is out of Double bounds.</exception>
 	Public ReadOnly Property DoubleValue As Double
 		Get
-			Return Convert.ToDouble(_decimalValue, CultureInfo.InvariantCulture)
+			Return Convert.ToDouble(_value, CultureInfo.InvariantCulture)
 		End Get
 	End Property
 
@@ -70,7 +70,7 @@ Public Class JsonNumber
 	''' </summary>
 	''' <param name="value">The value of the number.</param>
 	Public Sub New(value As Decimal)
-		Me._decimalValue = value
+		Me._value = value
 	End Sub
 
 
@@ -79,7 +79,7 @@ Public Class JsonNumber
 	''' </summary>
 	''' <param name="value">The value of the number.</param>
 	Public Sub New(value As Integer)
-		Me._decimalValue = value
+		Me._value = value
 	End Sub
 
 
@@ -88,7 +88,7 @@ Public Class JsonNumber
 	''' </summary>
 	''' <param name="value">The value of the number.</param>
 	Public Sub New(value As Long)
-		Me._decimalValue = value
+		Me._value = value
 	End Sub
 
 
@@ -97,7 +97,7 @@ Public Class JsonNumber
 	''' </summary>
 	''' <param name="value">The value of the number.</param>
 	Public Sub New(value As Double)
-		Me._decimalValue = Convert.ToDecimal(value, CultureInfo.InvariantCulture)
+		Me._value = Convert.ToDecimal(value, CultureInfo.InvariantCulture)
 	End Sub
 
 
@@ -106,7 +106,7 @@ Public Class JsonNumber
 	''' </summary>
 	''' <param name="value">The value of the number.</param>
 	Public Sub New(value As Single)
-		Me._decimalValue = Convert.ToDecimal(value, CultureInfo.InvariantCulture)
+		Me._value = Convert.ToDecimal(value, CultureInfo.InvariantCulture)
 	End Sub
 
 #Region "GetHashCode(), Equals()"
@@ -116,7 +116,7 @@ Public Class JsonNumber
 	''' </summary>
 	''' <returns>A hash code for the current <see cref="T:System.Object"/>.</returns>
 	Public Overrides Function GetHashCode() As Integer
-		Return Me._decimalValue.GetHashCode()
+		Return Me._value.GetHashCode()
 	End Function
 
 
@@ -134,7 +134,7 @@ Public Class JsonNumber
 
 		ElseIf TypeOf obj Is JsonNumber Then
 			Dim other = CType(obj, JsonNumber)
-			Return Me._decimalValue.Equals(other._decimalValue)
+			Return Me._value.Equals(other._value)
 
 		ElseIf TypeOf obj Is JsonDynamic Then
 			Dim other = CType(obj, JsonDynamic)
@@ -160,7 +160,7 @@ Public Class JsonNumber
 
 		End If
 
-		Return Me._decimalValue.Equals(other._decimalValue)
+		Return Me._value.Equals(other._value)
 	End Function
 
 
@@ -216,7 +216,7 @@ Public Class JsonNumber
 			Return Nothing
 		End If
 
-		Return value.DecimalValue
+		Return value.Value
 	End Operator
 
 
