@@ -9,10 +9,10 @@ Namespace Extensions
 	Public Module JsonDynamicExtensions
 
 		''' <summary>
-		''' Wraps given json value to dynamic type.
+		''' Returns the value of the dynamic wrapper.
 		''' </summary>
-		''' <param name="value">Value to be wrapped as dynamic.</param>
-		''' <returns>Dynamic wrappper around given value.</returns>
+		''' <param name="value">Dynamic wrapper whose value to get.</param>
+		''' <returns>Value of the dynamic wrapper.</returns>
 		<Extension()>
 		Public Function ToStatic(value As JsonDynamic) As JsonValue
 			Return value.Value
