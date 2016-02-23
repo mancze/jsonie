@@ -11,13 +11,13 @@ Public Class JsonEncoder
 	''' <summary>
 	''' Text writer used for output.
 	''' </summary>
-	Private writer As TextWriter = Nothing
+	Private _writer As TextWriter = Nothing
 
 
 	''' <summary>
 	''' Options for encoder.
 	''' </summary>
-	Private options As JsonEncoderOptions = Nothing
+	Private _options As JsonEncoderOptions = Nothing
 
 
 	''' <summary>
@@ -29,7 +29,7 @@ Public Class JsonEncoder
 			options = JsonEncoderOptions.Default
 		End If
 
-		Me.options = options
+		Me._options = options
 	End Sub
 
 
@@ -42,14 +42,14 @@ Public Class JsonEncoder
 	''' <exception cref="ObjectDisposedException">The writer is closed.</exception>
 	Public Sub Encode(value As JsonValue, writer As TextWriter)
 		Try
-			If Me.options.UsePrettyFormat Then
+			If Me._options.UsePrettyFormat Then
 				writer = New JsonPrettyFormatWriter(writer)
 			End If
 
-			Me.writer = writer
+			Me._writer = writer
 			Me.Write(value)
 		Finally
-			Me.writer = Nothing
+			Me._writer = Nothing
 		End Try
 	End Sub
 
@@ -60,7 +60,7 @@ Public Class JsonEncoder
 	''' <param name="value">Value to write.</param>
 	Private Sub Write(value As JsonValue)
 		If value Is Nothing Then
-			Me.writer.Write("null")
+			Me._writer.Write("null")
 
 		ElseIf TypeOf value Is JsonBool Then
 			Me.WriteBool(DirectCast(value, JsonBool))
@@ -86,7 +86,7 @@ Public Class JsonEncoder
 	''' </summary>
 	''' <param name="value">JSON boolean to write.</param>
 	Private Sub WriteBool(value As JsonBool)
-		Me.writer.Write(If(value.Value, "true", "false"))
+		Me._writer.Write(If(value.Value, "true", "false"))
 	End Sub
 
 
@@ -105,7 +105,7 @@ Public Class JsonEncoder
 	''' <param name="number">JSON number to write.</param>
 	Private Sub WriteNumber(number As JsonNumber)
 		' FIXME: access proper number type
-		Me.writer.Write(number.DecimalValue.ToString(CultureInfo.InvariantCulture))
+		Me._writer.Write(number.DecimalValue.ToString(CultureInfo.InvariantCulture))
 	End Sub
 
 
@@ -116,20 +116,20 @@ Public Class JsonEncoder
 	Private Sub WriteArray(value As JsonArray)
 		Dim isFirst = True
 
-		Me.writer.Write("["c)
+		Me._writer.Write("["c)
 
 		For Each item In value
 			If isFirst Then
 				isFirst = False
 			Else
 				' separator
-				Me.writer.Write(","c)
+				Me._writer.Write(","c)
 			End If
 
 			Me.Write(item)
 		Next
 
-		Me.writer.Write("]"c)
+		Me._writer.Write("]"c)
 	End Sub
 
 
@@ -140,22 +140,22 @@ Public Class JsonEncoder
 	Private Sub WriteObject(value As JsonObject)
 		Dim isFirst = True
 
-		Me.writer.Write("{"c)
+		Me._writer.Write("{"c)
 
 		For Each pair In value
 			If isFirst Then
 				isFirst = False
 			Else
 				' separator
-				Me.writer.Write(","c)
+				Me._writer.Write(","c)
 			End If
 
 			Me.WriteStringWithEscaping(pair.Key)
-			Me.writer.Write(":"c)
+			Me._writer.Write(":"c)
 			Me.Write(pair.Value)
 		Next
 
-		Me.writer.Write("}"c)
+		Me._writer.Write("}"c)
 	End Sub
 
 
@@ -164,7 +164,7 @@ Public Class JsonEncoder
 	''' </summary>
 	''' <param name="text">Text to escape &amp; write.</param>
 	Private Sub WriteStringWithEscaping(text As String)
-		Me.writer.Write("""")
+		Me._writer.Write("""")
 
 		Static charLf As Char = CChar(vbLf)
 		Static charCr As Char = CChar(vbCr)
@@ -180,41 +180,41 @@ Public Class JsonEncoder
 			curChar = text(index)
 			Select Case curChar
 				Case "\"c
-					Me.writer.Write("\\")
+					Me._writer.Write("\\")
 
 				Case """"c
-					Me.writer.Write("\""")
+					Me._writer.Write("\""")
 
 				Case "/"c
-					Me.writer.Write("\/")
+					Me._writer.Write("\/")
 
 				Case charLf
-					Me.writer.Write("\n")
+					Me._writer.Write("\n")
 
 				Case charCr
-					Me.writer.Write("\r")
+					Me._writer.Write("\r")
 
 				Case charTab
-					Me.writer.Write("\t")
+					Me._writer.Write("\t")
 
 				Case charFormFeed
-					Me.writer.Write("\f")
+					Me._writer.Write("\f")
 
 				Case charBackspace
-					Me.writer.Write("\b")
+					Me._writer.Write("\b")
 
 				Case Else
 					' escape control characters
 					If Char.IsControl(curChar) Then
-						Me.writer.Write("\u" & AscW(curChar).ToString("X4"))
+						Me._writer.Write("\u" & AscW(curChar).ToString("X4"))
 					Else
 						thisCharAsString = text(index)
-						Me.writer.Write(thisCharAsString)
+						Me._writer.Write(thisCharAsString)
 					End If
 			End Select
 		Next
 
-		Me.writer.Write("""")
+		Me._writer.Write("""")
 	End Sub
 
 End Class

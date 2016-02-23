@@ -22,7 +22,7 @@ Public Class JsonObject
 	''' </summary>
 	Public ReadOnly Property Count As Integer Implements ICollection(Of KeyValuePair(Of String, JsonValue)).Count
 		Get
-			Return Me.data.Count
+			Return Me._data.Count
 		End Get
 	End Property
 
@@ -36,10 +36,10 @@ Public Class JsonObject
 	''' <exception cref="KeyNotFoundException"><paramref name="key" /> is not found within dictionary.</exception>
 	Default Public Property Item(key As String) As JsonValue Implements IDictionary(Of String, JsonValue).Item
 		Get
-			Return Me.data.Item(key)
+			Return Me._data.Item(key)
 		End Get
 		Set(value As JsonValue)
-			Me.data.Item(key) = value
+			Me._data.Item(key) = value
 		End Set
 	End Property
 
@@ -49,19 +49,19 @@ Public Class JsonObject
 	''' </summary>
 	Private ReadOnly Property DataAsICollection As ICollection(Of KeyValuePair(Of String, JsonValue))
 		Get
-			Return data
+			Return _data
 		End Get
 	End Property
 
 
-	Private data As Dictionary(Of String, JsonValue)
+	Private ReadOnly _data As Dictionary(Of String, JsonValue)
 
 
 	''' <summary>
 	''' Creates new empty JSON object.
 	''' </summary>
 	Public Sub New()
-		Me.data = New Dictionary(Of String, JsonValue)()
+		Me._data = New Dictionary(Of String, JsonValue)()
 	End Sub
 
 
@@ -73,7 +73,7 @@ Public Class JsonObject
 	''' <exception cref="ArgumentNullException"><paramref name="key" /> is null.</exception>
 	''' <exception cref="ArgumentException">An property with the same <paramref name="key" /> already exists.</exception>
 	Public Sub Add(key As String, value As JsonValue) Implements IDictionary(Of String, JsonValue).Add
-		Me.data.Add(key, value)
+		Me._data.Add(key, value)
 	End Sub
 
 
@@ -109,7 +109,7 @@ Public Class JsonObject
 	''' <returns>true if object contains member with specified key, false otherwise.</returns>
 	''' <exception cref="ArgumentNullException"><paramref name="key" /> is null.</exception>
 	Public Function TryGetValue(key As String, ByRef value As JsonValue) As Boolean Implements IDictionary(Of String, JsonValue).TryGetValue
-		Return Me.data.TryGetValue(key, value)
+		Return Me._data.TryGetValue(key, value)
 	End Function
 
 
@@ -374,7 +374,7 @@ Public Class JsonObject
 	''' <exception cref="ArgumentNullException"><paramref name="key" /> is null.</exception>
 	''' <exception cref="ArgumentException">An property with the same <paramref name="key" /> already exists.</exception>
 	Protected Function AddAndGet(Of TJsonValue As {JsonValue})(key As String, value As TJsonValue) As TJsonValue
-		Me.data.Add(key, value)
+		Me._data.Add(key, value)
 		Return value
 	End Function
 
@@ -386,7 +386,7 @@ Public Class JsonObject
 	''' <returns>true if member is successfully found and removed, false otherwise.</returns>
 	''' <exception cref="ArgumentNullException"><paramref name="key" /> is null.</exception>
 	Public Function Remove(key As String) As Boolean Implements IDictionary(Of String, JsonValue).Remove
-		Return Me.data.Remove(key)
+		Return Me._data.Remove(key)
 	End Function
 
 
@@ -398,7 +398,7 @@ Public Class JsonObject
 	''' <returns>True if member with specified key member is defined in the object.</returns>
 	''' <exception cref="ArgumentNullException"><paramref name="key" /> is null.</exception>
 	Public Function ContainsKey(key As String) As Boolean Implements IDictionary(Of String, JsonValue).ContainsKey
-		Return Me.data.ContainsKey(key)
+		Return Me._data.ContainsKey(key)
 	End Function
 
 
@@ -423,7 +423,7 @@ Public Class JsonObject
 	''' Removes all members from the object.
 	''' </summary>
 	Public Sub Clear() Implements ICollection(Of KeyValuePair(Of String, JsonValue)).Clear
-		Me.data.Clear()
+		Me._data.Clear()
 	End Sub
 
 #Region "IDictionary"
@@ -433,7 +433,7 @@ Public Class JsonObject
 	''' </summary>
 	Public ReadOnly Property Keys As ICollection(Of String) Implements IDictionary(Of String, JsonValue).Keys
 		Get
-			Return Me.data.Keys
+			Return Me._data.Keys
 		End Get
 	End Property
 
@@ -443,7 +443,7 @@ Public Class JsonObject
 	''' </summary>
 	Public ReadOnly Property Values As ICollection(Of JsonValue) Implements IDictionary(Of String, JsonValue).Values
 		Get
-			Return Me.data.Values
+			Return Me._data.Values
 		End Get
 	End Property
 
@@ -476,7 +476,7 @@ Public Class JsonObject
 	''' <param name="item">The item to locate in the object.</param>
 	''' <returns>true if item is found in the object, false otherwise</returns>
 	Protected Function Contains(item As KeyValuePair(Of String, JsonValue)) As Boolean Implements ICollection(Of KeyValuePair(Of String, JsonValue)).Contains
-		Return Me.data.Contains(item)
+		Return Me._data.Contains(item)
 	End Function
 
 
@@ -508,7 +508,7 @@ Public Class JsonObject
 	''' </summary>
 	''' <returns>An enumerator for the object.</returns>
 	Public Function GetEnumerator() As IEnumerator(Of KeyValuePair(Of String, JsonValue)) Implements IEnumerable(Of KeyValuePair(Of String, JsonValue)).GetEnumerator
-		Return Me.data.GetEnumerator()
+		Return Me._data.GetEnumerator()
 	End Function
 
 
@@ -517,7 +517,7 @@ Public Class JsonObject
 	''' </summary>
 	''' <returns>An enumerator for the object.</returns>
 	Private Function GetEnumeratorObject() As IEnumerator Implements IEnumerable.GetEnumerator
-		Return Me.data.GetEnumerator()
+		Return Me._data.GetEnumerator()
 	End Function
 
 #End Region
@@ -529,7 +529,7 @@ Public Class JsonObject
 	''' </summary>
 	''' <returns>A hash code for the current <see cref="T:System.Object"/>.</returns>
 	Public Overrides Function GetHashCode() As Integer
-		Return Me.data.GetHashCode()
+		Return Me._data.GetHashCode()
 	End Function
 
 

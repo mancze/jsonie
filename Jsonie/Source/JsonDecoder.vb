@@ -12,23 +12,18 @@ Public Class JsonDecoder
 	Private Shared ReadOnly TabCharCode As Integer = AscW(vbTab)
 	Private Shared ReadOnly LineFeedCharCode As Integer = AscW(vbLf)
 	Private Shared ReadOnly CarriageReturnCharCode As Integer = AscW(vbCr)
-
 	Private Shared ReadOnly MaxWhiteSpaceCharCode As Integer = Math.Max(Math.Max(SpaceCharCode, TabCharCode), Math.Max(LineFeedCharCode, CarriageReturnCharCode))
 
 
-	''' <summary>
-	''' Options for decoder.
-	''' </summary>
-	Private options As JsonDecoderOptions = Nothing
+	Private _options As JsonDecoderOptions = Nothing
+	Private _reader As TextReader = Nothing
 
+	Private _position As Integer = 1
+	Private _line As Integer = 1
+	Private _column As Integer = 1
 
-	Private reader As TextReader = Nothing
-	Private position As Integer = 1
-	Private line As Integer = 1
-	Private column As Integer = 1
-
-	Private bufferedCharValid As Boolean = False
-	Private bufferedChar As Char = Nothing
+	Private _bufferedCharValid As Boolean = False
+	Private _bufferedChar As Char = Nothing
 
 
 	''' <summary>
@@ -40,7 +35,7 @@ Public Class JsonDecoder
 			options = JsonDecoderOptions.Default
 		End If
 
-		Me.options = options
+		Me._options = options
 	End Sub
 
 
@@ -54,7 +49,7 @@ Public Class JsonDecoder
 	''' <exception cref="ObjectDisposedException">The reader is closed.</exception>
 	Public Function Decode(reader As TextReader) As JsonValue
 		Try
-			Me.reader = reader
+			Me._reader = reader
 
 			' is reader input empty?
 			Dim isEos = False
@@ -66,10 +61,10 @@ Public Class JsonDecoder
 
 			Return Me.ReadValue()
 		Finally
-			Me.reader = Nothing
-			Me.position = 1
-			Me.line = 1
-			Me.column = 1
+			Me._reader = Nothing
+			Me._position = 1
+			Me._line = 1
+			Me._column = 1
 		End Try
 	End Function
 
@@ -376,7 +371,7 @@ Public Class JsonDecoder
 		Dim peek As Char = Me.PeekChar()
 
 		Do While Me.IsWhiteSpace(AscW(peek))
-			Me.bufferedCharValid = False ' this will cause to read next char
+			Me._bufferedCharValid = False ' this will cause to read next char
 			peek = Me.PeekChar()
 		Loop
 
@@ -420,28 +415,28 @@ Public Class JsonDecoder
 
 
 	Private Function PeekChar() As Char
-		If Not Me.bufferedCharValid Then
-			Me.bufferedChar = Me.ReadChar()
-			Me.bufferedCharValid = True
+		If Not Me._bufferedCharValid Then
+			Me._bufferedChar = Me.ReadChar()
+			Me._bufferedCharValid = True
 		End If
 
-		Return Me.bufferedChar
+		Return Me._bufferedChar
 	End Function
 
 
 	Private Function PeekChar(ByRef isEndOfStream As Boolean) As Char
 		isEndOfStream = False
-		If Not Me.bufferedCharValid Then
-			Me.bufferedChar = Me.ReadChar(isEndOfStream)
+		If Not Me._bufferedCharValid Then
+			Me._bufferedChar = Me.ReadChar(isEndOfStream)
 
 			If isEndOfStream Then
 				Return Nothing
 			End If
 
-			Me.bufferedCharValid = True
+			Me._bufferedCharValid = True
 		End If
 
-		Return Me.bufferedChar
+		Return Me._bufferedChar
 	End Function
 
 
@@ -460,33 +455,33 @@ Public Class JsonDecoder
 	Private Function ReadChar(ByRef isEndOfStream As Boolean) As Char
 		isEndOfStream = False
 
-		If Me.bufferedCharValid Then
+		If Me._bufferedCharValid Then
 			' take char from buffered
-			Me.bufferedCharValid = False
-			Return Me.bufferedChar
+			Me._bufferedCharValid = False
+			Return Me._bufferedChar
 		End If
 
-		Dim charCode = Me.reader.Read()
+		Dim charCode = Me._reader.Read()
 
 		If charCode < 0 Then
 			isEndOfStream = True
 			Return Nothing
 		ElseIf charCode = LineFeedCharCode Then
-			Me.line += 1
-			Me.column = 0
+			Me._line += 1
+			Me._column = 0
 		ElseIf charCode = CarriageReturnCharCode Then
-			Me.column -= 1
+			Me._column -= 1
 		End If
 
-		Me.position += 1
-		Me.column += 1
+		Me._position += 1
+		Me._column += 1
 
 		Return ChrW(charCode)
 	End Function
 
 
 	Private Function CreateFormatException(message As String) As JsonFormatException
-		Return New JsonFormatException(message, Me.line, Me.column - 1, Me.position - 1)
+		Return New JsonFormatException(message, Me._line, Me._column - 1, Me._position - 1)
 	End Function
 
 #End Region
