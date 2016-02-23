@@ -9,7 +9,7 @@
     </SchemaVersion>
     <ProjectGuid>{A12F1705-032F-4A60-88A3-327FED63702A}</ProjectGuid>
     <OutputType>Library</OutputType>
-    <RootNamespace>JsonieTests</RootNamespace>
+    <RootNamespace>Dextronet.Jsonie.Tests</RootNamespace>
     <AssemblyName>JsonieTests</AssemblyName>
     <FileAlignment>512</FileAlignment>
     <MyType>Windows</MyType>
