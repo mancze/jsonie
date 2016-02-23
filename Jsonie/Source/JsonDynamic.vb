@@ -493,11 +493,11 @@ Public Structure JsonDynamic
 
 
 	''' <summary>
-	''' Performs an implicit conversion from <see cref="JsonDynamic" /> to <see cref="JsonValue" />.
+	''' Performs an explicit conversion from <see cref="JsonDynamic" /> to <see cref="JsonValue" />.
 	''' </summary>
 	''' <param name="value">The value to convert.</param>
 	''' <returns>The <see cref="JsonValue" /> casted from the specified value.</returns>
-	Public Shared Widening Operator CType(value As JsonDynamic) As JsonValue
+	Public Shared Narrowing Operator CType(value As JsonDynamic) As JsonValue
 		Return value._value
 	End Operator
 
