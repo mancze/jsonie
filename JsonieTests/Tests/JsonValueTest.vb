@@ -1,6 +1,5 @@
 ﻿Imports NUnit.Framework
 Imports Dextronet.Jsonie
-Imports Dextronet.Jsonie.Extensions
 
 
 '''<summary>

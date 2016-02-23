@@ -1,7 +1,4 @@
-﻿Imports Dextronet.Jsonie.Extensions
-
-
-''' <summary>
+﻿''' <summary>
 ''' Dynamic wrapper around any JsonValue.
 ''' </summary>
 Public Structure JsonDynamic
