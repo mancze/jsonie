@@ -84,12 +84,12 @@ Public Structure JsonDynamic
 	''' <exception cref="InvalidCastException">Underlying JSON value is not object or array.</exception>
 	Public ReadOnly Property Count As Integer
 		Get
+			Me.ThrowIfValueIsNull()
+
 			If Me._value.IsObject Then
 				Return Me._value.AsObject().Count
 			ElseIf Me._value.IsArray Then
 				Return Me._value.AsArray().Count
-			ElseIf Me._value Is Nothing Then
-				ThrowHelper.ThrowNullDynamicCasted()
 			End If
 
 			Throw New InvalidCastException("Json value is not object nor array.")
@@ -113,14 +113,16 @@ Public Structure JsonDynamic
 	''' </summary>
 	''' <param name="key">Key of the member to return.</param>
 	''' <value>Member stored under given <paramref name="key" />.</value>
-	''' <exception cref="InvalidCastException">If underlying JSON value is not object.</exception>
 	''' <exception cref="ArgumentNullException"><paramref name="key" /> is Nothing.</exception>
 	''' <exception cref="KeyNotFoundException">The property is retrieved and <paramref name="key" /> is not found.</exception>
+	''' <exception cref="InvalidCastException">If underlying JSON value is not object.</exception>
 	Default Public Property Item(key As String) As JsonDynamic
 		Get
+			Me.ThrowIfValueIsNull()
 			Return Me._value.AsObject()(key).ToDynamic()
 		End Get
 		Set(value As JsonDynamic)
+			Me.ThrowIfValueIsNull()
 			Me._value.AsObject()(key) = value.Value
 		End Set
 	End Property
@@ -132,12 +134,14 @@ Public Structure JsonDynamic
 	''' <param name="index">Index of the item to return.</param>
 	''' <value>Item stored under given <paramref name="key" />.</value>
 	''' <exception cref="ArgumentOutOfRangeException"><paramref name="index" /> is less than 0 or is equal or more than <see cref="Count" />.</exception>
-	''' <exception cref="InvalidCastException">If underlying JSON value is not object.</exception>
+	''' <exception cref="InvalidCastException">If underlying JSON value is not array.</exception>
 	Default Public Property Item(index As Integer) As JsonDynamic
 		Get
+			Me.ThrowIfValueIsNull()
 			Return Me._value.AsArray()(index).ToDynamic()
 		End Get
 		Set(value As JsonDynamic)
+			Me.ThrowIfValueIsNull()
 			Me._value.AsArray()(index).ToDynamic()
 		End Set
 	End Property
@@ -162,6 +166,7 @@ Public Structure JsonDynamic
 	''' <exception cref="ArgumentException">An property with the same <paramref name="key" /> already exists.</exception>
 	''' <exception cref="InvalidCastException">If this dynamic object does not wrap JsonObject.</exception>
 	Public Sub Add(key As String, value As JsonValue)
+		Me.ThrowIfValueIsNull()
 		Me._value.AsObject().Add(key, value)
 	End Sub
 
@@ -175,6 +180,7 @@ Public Structure JsonDynamic
 	''' <exception cref="ArgumentException">An property with the same <paramref name="key" /> already exists.</exception>
 	''' <exception cref="InvalidCastException">If this dynamic object does not wrap JsonObject.</exception>
 	Public Function AddArray(key As String) As JsonDynamic
+		Me.ThrowIfValueIsNull()
 		Return Me._value.AsObject().AddArray(key).ToDynamic()
 	End Function
 
@@ -202,11 +208,8 @@ Public Structure JsonDynamic
 	''' <exception cref="ArgumentNullException"><paramref name="key" /> is null.</exception>
 	''' <exception cref="InvalidCastException">If this dynamic object does not wrap JsonObject.</exception>
 	Public Function GetOrDefault(key As String, Optional defaultValue As JsonValue = Nothing) As JsonDynamic
+		Me.ThrowIfValueIsNull()
 		Dim result As JsonValue = Nothing
-
-		If Me._value Is Nothing Then
-			ThrowHelper.ThrowNullDynamicCasted()
-		End If
 
 		If Me._value.AsObject().TryGetValue(key, result) Then
 			Return result.ToDynamic()
@@ -226,11 +229,8 @@ Public Structure JsonDynamic
 	''' <exception cref="ArgumentNullException"><paramref name="key" /> is Nothing.</exception>
 	''' <exception cref="InvalidCastException">If this dynamic object does not wrap JsonObject.</exception>
 	Public Function GetOrDefault(key As String, defaultValue As JsonDynamic) As JsonDynamic
+		Me.ThrowIfValueIsNull()
 		Dim result As JsonValue = Nothing
-
-		If Me._value Is Nothing Then
-			ThrowHelper.ThrowNullDynamicCasted()
-		End If
 
 		If Me._value.AsObject().TryGetValue(key, result) Then
 			Return result.ToDynamic()
@@ -249,16 +249,13 @@ Public Structure JsonDynamic
 	''' <exception cref="ArgumentNullException"><paramref name="key" /> is Nothing.</exception>
 	''' <exception cref="InvalidCastException">If this dynamic object does not wrap JsonObject.</exception>
 	Public Function GetOrAdd(key As String, addValue As JsonDynamic) As JsonDynamic
-		Dim value As JsonValue = Nothing
+		Me.ThrowIfValueIsNull()
+		Dim result As JsonValue = Nothing
 
-		If Me._value Is Nothing Then
-			ThrowHelper.ThrowNullDynamicCasted()
-		End If
-
-		If Me._value.AsObject().TryGetValue(key, value) Then
-			Return value.ToDynamic()
+		If Me._value.AsObject().TryGetValue(key, result) Then
+			Return result.ToDynamic()
 		Else
-			Me(key) = addValue
+			Me._value.AsObject().Add(key, addValue.Value)
 			Return addValue
 		End If
 	End Function
@@ -273,16 +270,13 @@ Public Structure JsonDynamic
 	''' <exception cref="ArgumentNullException"><paramref name="key" /> is Nothing.</exception>
 	''' <exception cref="InvalidCastException">If this dynamic object does not wrap JsonObject.</exception>
 	Public Function GetOrAdd(key As String, addValue As JsonValue) As JsonDynamic
+		Me.ThrowIfValueIsNull()
 		Dim value As JsonValue = Nothing
-
-		If Me._value Is Nothing Then
-			ThrowHelper.ThrowNullDynamicCasted()
-		End If
 
 		If Me._value.AsObject().TryGetValue(key, value) Then
 			Return value.ToDynamic()
 		Else
-			Me._value.AsObject()(key) = addValue
+			Me._value.AsObject().Add(key, addValue)
 			Return addValue.ToDynamic()
 		End If
 	End Function
@@ -297,10 +291,7 @@ Public Structure JsonDynamic
 	''' <exception cref="ArgumentNullException"><paramref name="key" /> is null.</exception>
 	''' <exception cref="InvalidCastException">If this dynamic object does not wrap JsonObject.</exception>
 	Public Function ContainsKey(key As String) As Boolean
-		If Me._value Is Nothing Then
-			ThrowHelper.ThrowNullDynamicCasted()
-		End If
-
+		Me.ThrowIfValueIsNull()
 		Return Me._value.AsObject().ContainsKey(key)
 	End Function
 
@@ -314,10 +305,7 @@ Public Structure JsonDynamic
 	''' <exception cref="ArgumentNullException"><paramref name="key" /> is null.</exception>
 	''' <exception cref="InvalidCastException">If this dynamic object does not wrap JsonObject.</exception>
 	Public Function ContainsKeyNotNull(key As String) As Boolean
-		If Me._value Is Nothing Then
-			ThrowHelper.ThrowNullDynamicCasted()
-		End If
-
+		Me.ThrowIfValueIsNull()
 		Return Me._value.AsObject().ContainsKeyNotNull(key)
 	End Function
 
@@ -330,10 +318,7 @@ Public Structure JsonDynamic
 	''' </summary>
 	''' <param name="item">Value to add.</param>
 	Public Sub Add(item As JsonValue)
-		If Me._value Is Nothing Then
-			ThrowHelper.ThrowNullDynamicCasted()
-		End If
-
+		Me.ThrowIfValueIsNull()
 		Me._value.AsArray().Add(item)
 	End Sub
 
@@ -343,10 +328,7 @@ Public Structure JsonDynamic
 	''' </summary>
 	''' <param name="items">Collection of items to add.</param>
 	Public Sub AddRange(items As IEnumerable(Of JsonValue))
-		If Me._value Is Nothing Then
-			ThrowHelper.ThrowNullDynamicCasted()
-		End If
-
+		Me.ThrowIfValueIsNull()
 		Me._value.AsArray().AddRange(items)
 	End Sub
 
@@ -359,10 +341,7 @@ Public Structure JsonDynamic
 	''' <exception cref="ArgumentOutOfRangeException"><paramref name="index" /> is less than 0 or is equal or more than <see cref="Count" />.</exception>
 	''' <exception cref="InvalidCastException">If this dynamic object does not wrap <see cref="JsonArray" />.</exception>
 	Public Sub Insert(index As Integer, item As JsonValue)
-		If Me._value Is Nothing Then
-			ThrowHelper.ThrowNullDynamicCasted()
-		End If
-
+		Me.ThrowIfValueIsNull()
 		Me._value.AsArray().Insert(index, item)
 	End Sub
 
@@ -376,10 +355,7 @@ Public Structure JsonDynamic
 	''' <exception cref="ArgumentNullException"><paramref name="items" /> is null.</exception>
 	''' <exception cref="InvalidCastException">If this dynamic object does not wrap <see cref="JsonArray" />.</exception>
 	Public Sub InsertRange(index As Integer, items As IEnumerable(Of JsonValue))
-		If Me._value Is Nothing Then
-			ThrowHelper.ThrowNullDynamicCasted()
-		End If
-
+		Me.ThrowIfValueIsNull()
 		Me._value.AsArray().InsertRange(index, items)
 	End Sub
 
@@ -392,13 +368,11 @@ Public Structure JsonDynamic
 	''' <returns>Value stored under given offset as dynamic.</returns>
 	''' <exception cref="InvalidCastException">If this dynamic object does not wrap <see cref="JsonArray" />.</exception>
 	Public Function GetOrDefault(index As Integer, Optional defaultValue As JsonValue = Nothing) As JsonDynamic
+		Me.ThrowIfValueIsNull()
+
 		Dim result As JsonValue = Nothing
-
-		If Me._value Is Nothing Then
-			ThrowHelper.ThrowNullDynamicCasted()
-		End If
-
 		Dim array = Me._value.AsArray()
+
 		If index < 0 OrElse index >= array.Count Then
 			Return defaultValue.ToDynamic()
 		Else
@@ -415,11 +389,8 @@ Public Structure JsonDynamic
 	''' <returns>Value stored under given offset as dynamic.</returns>
 	''' <exception cref="InvalidCastException">If this dynamic object does not wrap JsonArray.</exception>
 	Public Function GetOrDefault(index As Integer, defaultValue As JsonDynamic) As JsonDynamic
+		Me.ThrowIfValueIsNull()
 		Dim result As JsonValue = Nothing
-
-		If Me._value Is Nothing Then
-			ThrowHelper.ThrowNullDynamicCasted()
-		End If
 
 		Dim array = Me._value.AsArray()
 		If index < 0 OrElse index >= array.Count Then
@@ -686,5 +657,11 @@ Public Structure JsonDynamic
 	End Operator
 
 #End Region
+
+	Private Sub ThrowIfValueIsNull()
+		If Me._value Is Nothing Then
+			Throw New InvalidCastException("Cannot cast dynamic null to requested type.")
+		End If
+	End Sub
 
 End Structure
