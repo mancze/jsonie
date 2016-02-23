@@ -100,11 +100,10 @@ Public Class JsonEncoder
 
 
 	''' <summary>
-	''' Writes JSON number
+	''' Writes JSON number.
 	''' </summary>
 	''' <param name="number">JSON number to write.</param>
 	Private Sub WriteNumber(number As JsonNumber)
-		' FIXME: access proper number type
 		Me._writer.Write(number.DecimalValue.ToString(CultureInfo.InvariantCulture))
 	End Sub
 

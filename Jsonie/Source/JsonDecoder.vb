@@ -181,8 +181,7 @@ Public Class JsonDecoder
 			peek = Me.PeekChar(isEndOfStream)
 		Loop While Not isEndOfStream AndAlso ((peek >= "0"c AndAlso peek <= "9"c) OrElse peek = "." OrElse peek = "+"c OrElse peek = "-"c OrElse peek = "e"c OrElse peek = "E"c)
 
-		' FIXME: integer/decimal/double
-		Dim decimalValue = Convert.ToDecimal(digits.ToString(), CultureInfo.InvariantCulture)
+		Dim decimalValue = Decimal.Parse(digits.ToString(), NumberStyles.AllowExponent Or NumberStyles.AllowDecimalPoint Or NumberStyles.AllowLeadingSign, CultureInfo.InvariantCulture)
 		Return New JsonNumber(decimalValue)
 	End Function
 
