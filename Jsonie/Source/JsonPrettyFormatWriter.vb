@@ -106,6 +106,7 @@ Public Class JsonPrettyFormatWriter
 	''' For faster writing. Indent changes comes only when writing single char (relies on 
 	''' implementation details of JsonEncoder).
 	''' </summary>
+	''' <param name="value">The string to write.</param>
 	Public Overrides Sub Write(value As String)
 		If Me.pendingIndent Then
 			Me.pendingIndent = False

@@ -1,5 +1,5 @@
 ﻿''' <summary>
-''' Thrown when JSON format is invalid.
+''' Thrown when decoded JSON string is invalid.
 ''' </summary>
 <Serializable>
 Public Class JsonFormatException
@@ -39,6 +39,21 @@ Public Class JsonFormatException
 	Private _position As Integer = 0
 
 
+	''' <summary>
+	''' Creates new instance with a specified message.
+	''' </summary>
+	''' <param name="message">The message that describes the error. Value can be null.</param>
+	Public Sub New(message As String)
+		MyBase.New(message)
+	End Sub
+
+
+	''' <summary>
+	''' Creates new instance with specified point where error occurred.
+	''' </summary>
+	''' <param name="line">The line number where exception occurred.</param>
+	''' <param name="column">The column number where exception occurred.</param>
+	''' <param name="position">The possition where exception occurred.</param>
 	Public Sub New(line As Integer, column As Integer, position As Integer)
 		MyBase.New()
 		Me._line = line
@@ -47,6 +62,13 @@ Public Class JsonFormatException
 	End Sub
 
 
+	''' <summary>
+	''' Creates new instance with specified point where error occurred and message.
+	''' </summary>
+	''' <param name="message">The message that describes the error. Value can be null.</param>
+	''' <param name="line">The line number where exception occurred.</param>
+	''' <param name="column">The column number where exception occurred.</param>
+	''' <param name="position">The possition where exception occurred.</param>
 	Public Sub New(message As String, line As Integer, column As Integer, position As Integer)
 		MyBase.New(message)
 		Me._line = line
