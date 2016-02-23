@@ -101,7 +101,7 @@ Public Class JsonArray
 	''' <returns>The added array.</returns>
 	Public Function AddArray() As JsonArray
 		Dim array = New JsonArray()
-		Me.Add(array)
+		Me._data.Add(array)
 		Return array
 	End Function
 
@@ -112,7 +112,7 @@ Public Class JsonArray
 	''' <returns>The added object.</returns>
 	Public Function AddObject() As JsonObject
 		Dim obj = New JsonObject()
-		Me.Add(obj)
+		Me._data.Add(obj)
 		Return obj
 	End Function
 
@@ -148,20 +148,20 @@ Public Class JsonArray
 	''' <exception cref="ArgumentOutOfRangeException"><paramref name="index" /> is less than 0 or is equal or more than <see cref="Count" />.</exception>
 	Public Function InsertArray(index As Integer) As JsonArray
 		Dim array = New JsonArray()
-		Me.Insert(index, array)
+		Me._data.Insert(index, array)
 		Return array
 	End Function
 
 
 	''' <summary>
-	''' Adds an empty object at the specified index  and returns its instance.
+	''' Adds an empty object at the specified index and returns its instance.
 	''' </summary>
 	''' <param name="index">The zero-based index at which item should be inserted.</param>
 	''' <returns>The inserted object.</returns>
 	''' <exception cref="ArgumentOutOfRangeException"><paramref name="index" /> is less than 0 or is equal or more than <see cref="Count" />.</exception>
 	Public Function InsertObject(index As Integer) As JsonObject
 		Dim obj = New JsonObject()
-		Me.Insert(index, obj)
+		Me._data.Insert(index, obj)
 		Return obj
 	End Function
 
@@ -224,7 +224,7 @@ Public Class JsonArray
 	''' <summary>
 	''' Gets a value indicating whether the System.Collections.Generic.ICollection(Of T) is read-only.
 	''' </summary>
-	Protected ReadOnly Property IsReadOnly As Boolean Implements ICollection(Of JsonValue).IsReadOnly
+	Private ReadOnly Property IsReadOnly As Boolean Implements ICollection(Of JsonValue).IsReadOnly
 		Get
 			Return Me.DataAsICollection.IsReadOnly
 		End Get
