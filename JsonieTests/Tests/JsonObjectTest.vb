@@ -10,4 +10,15 @@ Imports Dextronet.Jsonie
 '''</summary>
 <TestFixture()>
 Public Class JsonObjectTest
+
+	<Test()>
+	Public Sub GetOrAdd_DoNotOverwriteNull()
+		Dim value = New JsonObject()
+		value("null") = Nothing
+
+		Assert.AreEqual(Nothing, value.GetOrAdd(Of JsonString)("null", "Hello World!"))
+		Assert.AreEqual(Nothing, value.GetOrAddObject("null"))
+		Assert.AreEqual(Nothing, value.GetOrAddArray("null"))
+	End Sub
+
 End Class

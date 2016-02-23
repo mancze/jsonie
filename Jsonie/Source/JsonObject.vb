@@ -283,79 +283,70 @@ Public Class JsonObject
 
 
 	''' <summary>
-	''' Gets object stored under given key. 
+	''' Gets the member stored under given key and casts it to desired type. If key does not exist specified value is 
+	''' stored as a new member.
 	''' </summary>
-	''' <example>
-	''' Dim myInnerObject = myObject.GetOrAddObject("inner")
-	''' myInnerObject("some") = value
-	''' </example>
-	''' <param name="key">The key under which is object stored.</param>
-	''' <returns>Value stored under given key casted as object.</returns>
-	''' <exception cref="ArgumentNullException"><paramref name="key" /> is null.</exception>
-	''' <exception cref="InvalidCastException">If property with given key exist and is not of given type TJsonValue.</exception>
-	''' <remarks>
-	''' If key does not exist, new <see cref="JsonObject" /> is stored under given key and returned. If null is stored 
-	''' under given key, new <see cref="JsonObject" /> takes places instead and also is returned.
-	''' 
-	''' Therefore this method does not return null, only exception might be thrown if another value is already stored 
-	''' under given key and it is not <see cref="JsonObject" />.
-	''' </remarks>
-	Public Function GetOrAddObject(key As String) As JsonObject
-		Dim value As JsonValue = Nothing
-		If Me.TryGetValue(key, value) Then
-			If value Is Nothing Then
-				' overwrite null to object
-				Dim newObject = New JsonObject()
-				Me(key) = newObject
-				Return newObject
+	''' <param name="key">The key of the member to get.</param>
+	''' <param name="addValue">The value to add if specified member does not exist.</param>
+	''' <returns>The value stored under given key casted to the TJsonValue.</returns>
+	''' <exception cref="ArgumentNullException"><paramref name="key" /> is Nothing.</exception>
+	''' <exception cref="InvalidCastException">If property with given key exist and is not of TJsonValue type.</exception>
+	Public Function GetOrAdd(Of TJsonValue As {JsonValue})(key As String, addValue As TJsonValue) As TJsonValue
+		Dim result As JsonValue = Nothing
 
-			Else
-				' cast value to object
-				Return CType(value, JsonObject)
-
-			End If
+		If Me.TryGetValue(key, result) Then
+			' cast result to desired type
+			Return CType(result, TJsonValue)
 		Else
-			Return Me.AddAndGet(key, New JsonObject())
-
+			Return Me.AddAndGet(key, addValue)
 		End If
 	End Function
 
 
 	''' <summary>
-	''' Gets array stored under given key. 
+	''' Gets value stored under given key and casts it to object. If key does not exist new empty object is added to
+	''' the specified key.
+	''' </summary>
+	''' <example>
+	''' Dim myInnerObject = myObject.GetOrAddObject("inner")
+	''' myInnerObject("some") = value
+	''' </example>
+	''' <param name="key">The key of the member to get.</param>
+	''' <returns>The value stored under given key casted to <see cref="JsonObject" />.</returns>
+	''' <exception cref="ArgumentNullException"><paramref name="key" /> is null.</exception>
+	''' <exception cref="InvalidCastException">If property with given key exist and is not <see cref="JsonObject" />.</exception>
+	Public Function GetOrAddObject(key As String) As JsonObject
+		Dim value As JsonValue = Nothing
+
+		If Me.TryGetValue(key, value) Then
+			' cast value to object
+			Return CType(value, JsonObject)
+		Else
+			Return Me.AddAndGet(key, New JsonObject())
+		End If
+	End Function
+
+
+	''' <summary>
+	''' Gets value stored under given key and casts it to array. If key does not exist new empty array is added to the
+	''' specified key.
 	''' </summary>
 	''' <example>
 	''' Dim myInnerArray = myObject.GetOrAddArray("inner")
-	''' myInnerObject.Add(True)
+	''' myInnerArray.Add(True)
 	''' </example>
-	''' <param name="key">The key under which is array stored.</param>
-	''' <returns>Value stored under given key casted as array.</returns>
+	''' <param name="key">The key of the member to get.</param>
+	''' <returns>The value stored under given key casted to <see cref="JsonArray" />.</returns>
 	''' <exception cref="ArgumentNullException"><paramref name="key" /> is null.</exception>
-	''' <exception cref="InvalidCastException">If property with given key exist and is not of given type TJsonValue.</exception>
-	''' <remarks>
-	''' If key does not exist, new <see cref="JsonArray" /> is stored under given key and returned. If null is stored 
-	''' under given key, new <see cref="JsonArray" /> takes places instead and also is returned.
-	''' 
-	''' Therefore this method does not return null, only exception might be thrown if another value
-	''' is already stored under given key and it's not JsonArray.
-	''' </remarks>
+	''' <exception cref="InvalidCastException">If property with given key exist and is not of <see cref="JsonArray" />.</exception>
 	Public Function GetOrAddArray(key As String) As JsonArray
 		Dim value As JsonValue = Nothing
+
 		If Me.TryGetValue(key, value) Then
-			If value Is Nothing Then
-				' overwrite null to object
-				Dim newObject = New JsonArray()
-				Me(key) = newObject
-				Return newObject
-
-			Else
-				' cast value to object
-				Return CType(value, JsonArray)
-
-			End If
+			' cast value to object
+			Return CType(value, JsonArray)
 		Else
 			Return Me.AddAndGet(key, New JsonArray())
-
 		End If
 	End Function
 
