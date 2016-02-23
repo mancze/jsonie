@@ -96,4 +96,13 @@
     </PostBuildEvent>
     <RunPostBuildEvent>OnBuildSuccess</RunPostBuildEvent>
   </PropertyGroup>
+  <ItemGroup>
+    <CodeSnippets Include="Examples.snippets" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Examples.aml" />
+  </ItemGroup>
+  <ItemGroup>
+    <ContentLayout Include="Documentation.content" />
+  </ItemGroup>
 </Project>
