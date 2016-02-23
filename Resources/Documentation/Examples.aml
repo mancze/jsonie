@@ -12,7 +12,7 @@
 <codeReference>Examples#JsonValue</codeReference>
 
 <para>Usage of <codeEntityReference>T:Dextronet.Jsonie.JsonDynamic</codeEntityReference>:</para>
-<codeReference>Examples#JsonValue</codeReference>
+<codeReference>Examples#JsonDynamic</codeReference>
       	
       </content>
     </section>
