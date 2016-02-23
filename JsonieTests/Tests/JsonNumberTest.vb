@@ -9,4 +9,13 @@ Imports Dextronet.Jsonie
 '''</summary>
 <TestFixture()>
 Public Class JsonNumberTest
+
+	<Test()>
+	Public Sub Cast_NullToBool_ReturnsNull()
+		Dim value As JsonNumber = Nothing
+		Dim castedValue As Decimal? = value
+
+		Assert.AreEqual(Nothing, castedValue)
+	End Sub
+
 End Class

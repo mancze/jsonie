@@ -211,7 +211,7 @@ Public Class JsonNumber
 	''' </summary>
 	''' <param name="value">The value to convert.</param>
 	''' <returns>The <see cref="Decimal" /> casted from the specified value.</returns>
-	Public Overloads Shared Widening Operator CType(value As JsonNumber) As Decimal
+	Public Overloads Shared Widening Operator CType(value As JsonNumber) As Decimal?
 		If value Is Nothing Then
 			Return Nothing
 		End If
