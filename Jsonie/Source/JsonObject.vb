@@ -286,6 +286,7 @@ Public Class JsonObject
 	''' Gets the member stored under given key and casts it to desired type. If key does not exist specified value is 
 	''' stored as a new member.
 	''' </summary>
+	''' <typeparam name="TJsonValue">Type of the value to get.</typeparam>
 	''' <param name="key">The key of the member to get.</param>
 	''' <param name="addValue">The value to add if specified member does not exist.</param>
 	''' <returns>The value stored under given key casted to the TJsonValue.</returns>
