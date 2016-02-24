@@ -19,7 +19,7 @@ Public Class JsonPrettyFormatWriter
 	''' </summary>
 	Public Overrides ReadOnly Property Encoding As System.Text.Encoding
 		Get
-			Return Me.writer.Encoding
+			Return Me._writer.Encoding
 		End Get
 	End Property
 
@@ -43,9 +43,8 @@ Public Class JsonPrettyFormatWriter
 	Private _depth As Integer = 0
 
 
-	Private writer As TextWriter = Nothing
-
-	Private pendingIndent As Boolean = False
+	Private _writer As TextWriter = Nothing
+	Private _hasPendingIndent As Boolean = False
 
 
 	''' <summary>
@@ -57,7 +56,7 @@ Public Class JsonPrettyFormatWriter
 			Throw New ArgumentNullException("writer")
 		End If
 
-		Me.writer = writer
+		Me._writer = writer
 	End Sub
 
 
@@ -68,35 +67,35 @@ Public Class JsonPrettyFormatWriter
 	Public Overrides Sub Write(value As Char)
 		Select Case value
 			Case "{"c, "["c
-				Me.writer.Write(value)
+				Me._writer.Write(value)
 				Me.Depth += 1
-				Me.pendingIndent = True
+				Me._hasPendingIndent = True
 
 			Case ","c
-				Me.writer.Write(value)
+				Me._writer.Write(value)
 				Me.WriteNewLine()
 				Me.WriteIndent()
 
 			Case ":"c
-				Me.writer.Write(": ")
+				Me._writer.Write(": ")
 
 			Case "}"c, "]"c
 				Me.Depth -= 1
 
-				If pendingIndent Then
+				If _hasPendingIndent Then
 					' empty array/object
-					Me.pendingIndent = False
-					Me.writer.Write(" ")
+					Me._hasPendingIndent = False
+					Me._writer.Write(" ")
 				Else
 					' non empty array/object
 					Me.WriteNewLine()
 					Me.WriteIndent()
 				End If
 
-				Me.writer.Write(value)
+				Me._writer.Write(value)
 
 			Case Else
-				Me.writer.Write(value)
+				Me._writer.Write(value)
 
 		End Select
 	End Sub
@@ -106,14 +105,15 @@ Public Class JsonPrettyFormatWriter
 	''' For faster writing. Indent changes comes only when writing single char (relies on 
 	''' implementation details of JsonEncoder).
 	''' </summary>
+	''' <param name="value">The string to write.</param>
 	Public Overrides Sub Write(value As String)
-		If Me.pendingIndent Then
-			Me.pendingIndent = False
+		If Me._hasPendingIndent Then
+			Me._hasPendingIndent = False
 			Me.WriteNewLine()
 			Me.WriteIndent()
 		End If
 
-		Me.writer.Write(value)
+		Me._writer.Write(value)
 	End Sub
 
 
@@ -121,7 +121,7 @@ Public Class JsonPrettyFormatWriter
 	''' Writes new line.
 	''' </summary>
 	Private Sub WriteNewLine()
-		Me.writer.Write(Me.NewLine)
+		Me._writer.Write(Me.NewLine)
 	End Sub
 
 
@@ -130,7 +130,7 @@ Public Class JsonPrettyFormatWriter
 	''' </summary>
 	Private Sub WriteIndent()
 		For i = 0 To Me.Depth - 1
-			Me.writer.Write(Me.Indent)
+			Me._writer.Write(Me.Indent)
 		Next
 	End Sub
 

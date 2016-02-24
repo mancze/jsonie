@@ -78,9 +78,9 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
-    <Compile Include="Source\Extensions\JsonDynamicExtensions.vb" />
+    <Compile Include="Source\JsonDynamicExtensions.vb" />
     <Compile Include="Source\JsonDynamic.vb" />
-    <Compile Include="Source\Extensions\JsonStringExtensions.vb" />
+    <Compile Include="Source\JsonStringExtensions.vb" />
     <Compile Include="Source\JsonFormatException.vb" />
     <Compile Include="Source\JsonArray.vb" />
     <Compile Include="Source\JsonBool.vb" />
@@ -95,8 +95,7 @@
     <Compile Include="Source\JsonPrettyFormatWriter.vb" />
     <Compile Include="Source\JsonString.vb" />
     <Compile Include="Source\JsonValue.vb" />
-    <Compile Include="Source\Extensions\JsonValueExtensions.vb" />
-    <Compile Include="Source\ThrowHelper.vb" />
+    <Compile Include="Source\JsonValueExtensions.vb" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="My Project\Resources.resx">

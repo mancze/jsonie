@@ -1,0 +1,80 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<!-- This is an example code snippets file -->
+<examples>
+	<item id="Examples#JsonValue">
+		<sampleCode language="VisualBasic">
+Dim payload = &lt;![CDATA[{
+	"array": [0, 1, 2],
+	"boolean": true,
+	"null": null,
+	"number": 123,
+	"object": {
+		"a": "Aloha",
+		"c": "Claire",
+		"e": "Edward"
+	},
+	"string": "Hello World"
+}]]&gt;.Value
+
+Dim json = JsonParser.Decode(input)
+
+If json IsNot Nothing AndAlso json.IsObject Then
+	' casting shortcut via extensions
+	Dim jsonObject = json.AsObject() 
+
+	' True
+	Console.WriteLine(jsonObject("null") Is Nothing) 
+
+	' 3
+	Console.WriteLine(jsonObject("array").AsArray().Count) 
+
+	' 1
+	Console.WriteLine(jsonObject("array").AsArray()(1).AsNumber().Value) 
+
+	' Aloha
+	Console.WriteLine(jsonObject("object").AsObject()("a").AsString().Value) 
+End If
+		</sampleCode>
+	</item>
+	<item id="Examples#JsonDynamic">
+		<sampleCode language="VisualBasic">
+Dim payload = &lt;![CDATA[{
+	"array": [0, 1, 2],
+	"boolean": true,
+	"null": null,
+	"number": 123,
+	"object": {
+		"a": "Aloha",
+		"c": "Claire",
+		"e": "Edward"
+	},
+	"string": "Hello World"
+}]]&gt;.Value
+
+' we will take advantage of the dynamic casting
+Dim json = JsonParser.Decode(payload).ToDynamic()
+
+' True
+Console.WriteLine(json("null").IsNull) 
+
+' True
+Console.WriteLine(json("null") = Nothing) 
+
+' 3		
+Console.WriteLine(json("array").Count) 
+
+' 1
+Console.WriteLine(CInt(json("array")(1)))
+
+' Aloha
+Console.WriteLine(CStr(json("object")("a")))
+
+' Oops, not an array.
+Try
+	json(0)
+Catch ex As InvalidCastException
+	Console.WriteLine("Oops, not an array.")
+End Try
+		</sampleCode>
+	</item>
+</examples>

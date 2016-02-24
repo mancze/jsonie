@@ -12,14 +12,14 @@ Public Class JsonDecoderTest
 #Region "Decode Null Tests"
 
 	<Test()>
-	Public Sub Decode_Null_ReturnsCorrectObject()
+	Public Sub Decode_Null()
 		Dim nullDecoded = JsonParser.Decode("null")
 		Assert.AreEqual(Nothing, nullDecoded)
 	End Sub
 
 
 	<Test()>
-	Public Sub Decode_EmptyInput_ReturnsCorrectObject()
+	Public Sub Decode_EmptyInput()
 		Dim nullDecoded = JsonParser.Decode("")
 		Assert.AreEqual(Nothing, nullDecoded)
 	End Sub
@@ -29,7 +29,7 @@ Public Class JsonDecoderTest
 #Region "Decode Boolean Tests"
 
 	<Test()>
-	Public Sub Decode_True_ReturnsCorrectObject()
+	Public Sub Decode_True()
 		Dim trueDecoded = JsonParser.Decode("true")
 
 		Assert.AreEqual(JsonBool.True, trueDecoded)
@@ -37,7 +37,7 @@ Public Class JsonDecoderTest
 
 
 	<Test()>
-	Public Sub Decode_False_ReturnsCorrectObject()
+	Public Sub Decode_False()
 		Dim falseDecoded = JsonParser.Decode("false")
 
 		Assert.AreEqual(JsonBool.False, falseDecoded)
@@ -48,7 +48,7 @@ Public Class JsonDecoderTest
 #Region "Decode Number Tests"
 
 	<Test()>
-	Public Sub Decode_PositiveInteger_ReturnsCorrectObject()
+	Public Sub Decode_PositiveInteger()
 		Dim valueExpected = New JsonNumber(42)
 		Dim valueDecoded = JsonParser.Decode("42")
 
@@ -57,7 +57,7 @@ Public Class JsonDecoderTest
 
 
 	<Test()>
-	Public Sub Decode_NegativeInteger_ReturnsCorrectObject()
+	Public Sub Decode_NegativeInteger()
 		Dim valueExpected = New JsonNumber(-42)
 		Dim valueDecoded = JsonParser.Decode("-42")
 
@@ -66,7 +66,7 @@ Public Class JsonDecoderTest
 
 
 	<Test()>
-	Public Sub Decode_Double_ReturnsCorrectObject()
+	Public Sub Decode_Double()
 		Dim valueExpected = New JsonNumber(-123456987.987R)
 		Dim valueDecoded = JsonParser.Decode("-123456987.987")
 
@@ -75,9 +75,30 @@ Public Class JsonDecoderTest
 
 
 	<Test()>
-	Public Sub Decode_Decimal_ReturnsCorrectObject()
+	Public Sub Decode_Decimal()
 		Dim valueExpected = New JsonNumber(-123456789.987654321D)
 		Dim valueDecoded = JsonParser.Decode("-123456789.987654321")
+
+		Assert.AreEqual(valueExpected, valueDecoded)
+	End Sub
+
+
+	<TestCase(100, "10E1")>
+	<TestCase(100, "10E+1")>
+	<TestCase(100, "1000E-1")>
+	<TestCase(100, "10e1")>
+	<TestCase(100, "10e+1")>
+	<TestCase(100, "1e+2")>
+	<TestCase(100, "1000e-1")>
+	<TestCase(0.321, "321E-3")>
+	<TestCase(0.321, "32.1E-2")>
+	<TestCase(0.321, "3.21E-1")>
+	<TestCase(0.321, "0.0321E1")>
+	<TestCase(0.321, "0.00321E2")>
+	<TestCase(0.321, "0.0321E+1")>
+	Public Sub Decode_DecimalWithExponentialNotation(value As Decimal, encodedValue As String)
+		Dim valueExpected = New JsonNumber(value)
+		Dim valueDecoded = JsonParser.Decode(encodedValue)
 
 		Assert.AreEqual(valueExpected, valueDecoded)
 	End Sub
@@ -87,7 +108,7 @@ Public Class JsonDecoderTest
 #Region "Decode String Tests"
 
 	<Test()>
-	Public Sub Decode_String_ReturnsCorrectObject()
+	Public Sub Decode_String()
 		Dim valueExpected = New JsonString("Hello World!")
 		Dim valueDecoded = JsonParser.Decode(Me.Quote("Hello World!"))
 
@@ -96,7 +117,7 @@ Public Class JsonDecoderTest
 
 
 	<Test()>
-	Public Sub Decode_EmptyString_ReturnsCorrectObject()
+	Public Sub Decode_EmptyString()
 		Dim valueExpected = New JsonString(String.Empty)
 		Dim valueDecoded = JsonParser.Decode(Me.Quote(String.Empty))
 
@@ -105,7 +126,7 @@ Public Class JsonDecoderTest
 
 
 	<Test()>
-	Public Sub Decode_EscapableString_ReturnsCorrectObject()
+	Public Sub Decode_EscapableString()
 		Dim valueExpected = New JsonString("Hello ""World""! Two revers solidus go here \\")
 		Dim valueDecoded = JsonParser.Decode("""Hello \""World\""! Two revers solidus go here \\\\""")
 
@@ -114,7 +135,7 @@ Public Class JsonDecoderTest
 
 
 	<Test()>
-	Public Sub Decode_EscapeCharacters_ReturnsCorrectObject()
+	Public Sub Decode_EscapeCharacters()
 		Dim escapeSeqs = {"\""", "\\", "\/", "\b", "\f", "\n", "\r", "\t", "\u0000", "\u1234"}
 
 		For Each escapeSeq In escapeSeqs
@@ -167,7 +188,7 @@ Public Class JsonDecoderTest
 
 
 	<Test()>
-	Public Sub Decode_MultilineStringCrLf_ReturnsCorrectObject()
+	Public Sub Decode_MultilineStringCrLf()
 		Dim words = "Hello World Each Word Is On Separate Line"
 
 		Dim jsonValue = """" & words.Replace(" ", "\r\n") & """"
@@ -179,7 +200,7 @@ Public Class JsonDecoderTest
 
 
 	<Test()>
-	Public Sub Decode_MultilineStringCr_ReturnsCorrectObject()
+	Public Sub Decode_MultilineStringCr()
 		Dim words = "Hello World Each Word Is On Separate Line"
 
 		Dim jsonValue = """" & words.Replace(" ", "\r") & """"
@@ -191,7 +212,7 @@ Public Class JsonDecoderTest
 
 
 	<Test()>
-	Public Sub Decode_MultilineStringLf_ReturnsCorrectObject()
+	Public Sub Decode_MultilineStringLf()
 		Dim words = "Hello World Each Word Is On Separate Line"
 
 		Dim jsonValue = """" & words.Replace(" ", "\n") & """"
@@ -206,7 +227,7 @@ Public Class JsonDecoderTest
 #Region "Decode Array Tests"
 
 	<Test()>
-	Public Sub Decode_EmptyArray_ReturnsCorrectObject()
+	Public Sub Decode_EmptyArray()
 		Dim valueDecoded = JsonParser.Decode("[]")
 
 		Assert.IsTrue(TypeOf (valueDecoded) Is JsonArray, "Expected type JsonArray.")
@@ -217,7 +238,7 @@ Public Class JsonDecoderTest
 
 
 	<Test()>
-	Public Sub Decode_SimpleArray_ReturnsCorrectObject()
+	Public Sub Decode_SimpleArray()
 		Dim jsonValue = "[ ""Hello World!"", 123.321, true, null, [], {} ]"
 		Dim valueDecoded = JsonParser.Decode(jsonValue)
 
@@ -237,7 +258,7 @@ Public Class JsonDecoderTest
 #Region "Decode Object Tests"
 
 	<Test()>
-	Public Sub Decode_EmptyObject_ReturnsCorrectObject()
+	Public Sub Decode_EmptyObject()
 		Dim valueDecoded = JsonParser.Decode("{}")
 
 		Assert.IsTrue(TypeOf (valueDecoded) Is JsonObject, "Expected type JsonObject.")
@@ -248,7 +269,7 @@ Public Class JsonDecoderTest
 
 
 	<Test()>
-	Public Sub Decode_SimpleObject_ReturnsCorrectObject()
+	Public Sub Decode_SimpleObject()
 		Dim jsonValue = "{ ""string"": ""Hello World!"", ""number"": 123.321, ""bool"": true, ""null"": null, ""array"": [], ""object"": { } }"
 		Dim valueDecoded = JsonParser.Decode(jsonValue)
 

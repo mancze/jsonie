@@ -1,0 +1,20 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<topic id="Examples" revisionNumber="1">
+  <developerConceptualDocument xmlns="http://ddue.schemas.microsoft.com/authoring/2003/5" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <introduction>
+      <para>This is example how to parse and work with JSON data.</para>
+    </introduction>
+    <section>
+      <title>Basic Usage</title>
+      <content>
+
+<para>Usage of <codeEntityReference>T:Dextronet.Jsonie.JsonValue</codeEntityReference>:</para>
+<codeReference>Examples#JsonValue</codeReference>
+
+<para>Usage of <codeEntityReference>T:Dextronet.Jsonie.JsonDynamic</codeEntityReference>:</para>
+<codeReference>Examples#JsonDynamic</codeReference>
+      	
+      </content>
+    </section>
+  </developerConceptualDocument>
+</topic>

@@ -24,7 +24,7 @@ Public MustInherit Class JsonValue
 
 
 	''' <summary>
-	''' Tests if this is not JSON object nor array.
+	''' Tests if this is JSON string or number or boolean.
 	''' </summary>
 	Public ReadOnly Property IsScalar As Boolean
 		Get
@@ -116,20 +116,35 @@ Public MustInherit Class JsonValue
 
 #Region "Operators"
 
-	Public Shared Widening Operator CType(text As String) As JsonValue
-		If text Is Nothing Then
+	''' <summary>
+	''' Performs an implicit conversion from <see cref="String" /> to <see cref="JsonString" />.
+	''' </summary>
+	''' <param name="value">The value to convert.</param>
+	''' <returns>The <see cref="JsonString" /> casted from the specified value.</returns>
+	Public Shared Widening Operator CType(value As String) As JsonValue
+		If value Is Nothing Then
 			Return Nothing
 		End If
 
-		Return New JsonString(text)
+		Return New JsonString(value)
 	End Operator
 
 
+	''' <summary>
+	''' Performs an implicit conversion from <see cref="Boolean" /> to <see cref="JsonBool" />.
+	''' </summary>
+	''' <param name="value">The value to convert.</param>
+	''' <returns>The <see cref="JsonBool" /> casted from the specified value.</returns>
 	Public Shared Widening Operator CType(value As Boolean) As JsonValue
 		Return If(value, JsonBool.True, JsonBool.False)
 	End Operator
 
 
+	''' <summary>
+	''' Performs an implicit conversion from nullable <see cref="Boolean" /> to <see cref="JsonBool" />.
+	''' </summary>
+	''' <param name="value">The value to convert.</param>
+	''' <returns>The <see cref="JsonBool" /> casted from the specified value.</returns>
 	Public Shared Widening Operator CType(value As Boolean?) As JsonValue
 		If Not value.HasValue Then
 			Return Nothing
@@ -139,73 +154,123 @@ Public MustInherit Class JsonValue
 	End Operator
 
 
-	Public Shared Widening Operator CType(number As Integer) As JsonValue
-		Return New JsonNumber(number)
+	''' <summary>
+	''' Performs an implicit conversion from <see cref="Integer" /> to <see cref="JsonNumber" />.
+	''' </summary>
+	''' <param name="value">The value to convert.</param>
+	''' <returns>The <see cref="JsonNumber" /> casted from the specified value.</returns>
+	Public Shared Widening Operator CType(value As Integer) As JsonValue
+		Return New JsonNumber(value)
 	End Operator
 
 
-	Public Shared Widening Operator CType(number As Integer?) As JsonValue
-		If Not number.HasValue Then
+	''' <summary>
+	''' Performs an implicit conversion from nullable <see cref="Integer" /> to <see cref="JsonNumber" />.
+	''' </summary>
+	''' <param name="value">The value to convert.</param>
+	''' <returns>The <see cref="JsonNumber" /> casted from the specified value.</returns>
+	Public Shared Widening Operator CType(value As Integer?) As JsonValue
+		If Not value.HasValue Then
 			Return Nothing
 		End If
 
-		Return New JsonNumber(number.Value)
+		Return New JsonNumber(value.Value)
 	End Operator
 
 
-	Public Shared Widening Operator CType(number As Long) As JsonValue
-		Return New JsonNumber(number)
+	''' <summary>
+	''' Performs an implicit conversion from <see cref="Long" /> to <see cref="JsonNumber" />.
+	''' </summary>
+	''' <param name="value">The value to convert.</param>
+	''' <returns>The <see cref="JsonNumber" /> casted from the specified value.</returns>
+	Public Shared Widening Operator CType(value As Long) As JsonValue
+		Return New JsonNumber(value)
 	End Operator
 
 
-	Public Shared Widening Operator CType(number As Long?) As JsonValue
-		If Not number.HasValue Then
+	''' <summary>
+	''' Performs an implicit conversion from nullable <see cref="Long" /> to <see cref="JsonNumber" />.
+	''' </summary>
+	''' <param name="value">The value to convert.</param>
+	''' <returns>The <see cref="JsonNumber" /> casted from the specified value.</returns>
+	Public Shared Widening Operator CType(value As Long?) As JsonValue
+		If Not value.HasValue Then
 			Return Nothing
 		End If
 
-		Return New JsonNumber(number.Value)
+		Return New JsonNumber(value.Value)
 	End Operator
 
 
-	Public Shared Widening Operator CType(number As Single) As JsonValue
-		Return New JsonNumber(number)
+	''' <summary>
+	''' Performs an implicit conversion from <see cref="Single" /> to <see cref="JsonNumber" />.
+	''' </summary>
+	''' <param name="value">The value to convert.</param>
+	''' <returns>The <see cref="JsonNumber" /> casted from the specified value.</returns>
+	Public Shared Widening Operator CType(value As Single) As JsonValue
+		Return New JsonNumber(value)
 	End Operator
 
 
-	Public Shared Widening Operator CType(number As Single?) As JsonValue
-		If Not number.HasValue Then
+	''' <summary>
+	''' Performs an implicit conversion from nullable <see cref="Single" /> to <see cref="JsonNumber" />.
+	''' </summary>
+	''' <param name="value">The value to convert.</param>
+	''' <returns>The <see cref="JsonNumber" /> casted from the specified value.</returns>
+	Public Shared Widening Operator CType(value As Single?) As JsonValue
+		If Not value.HasValue Then
 			Return Nothing
 		End If
 
-		Return New JsonNumber(number.Value)
+		Return New JsonNumber(value.Value)
 	End Operator
 
 
-	Public Shared Widening Operator CType(number As Double) As JsonValue
-		Return New JsonNumber(number)
+	''' <summary>
+	''' Performs an implicit conversion from <see cref="Double" /> to <see cref="JsonNumber" />.
+	''' </summary>
+	''' <param name="value">The value to convert.</param>
+	''' <returns>The <see cref="JsonNumber" /> casted from the specified value.</returns>
+	Public Shared Widening Operator CType(value As Double) As JsonValue
+		Return New JsonNumber(value)
 	End Operator
 
 
-	Public Shared Widening Operator CType(number As Double?) As JsonValue
-		If Not number.HasValue Then
+	''' <summary>
+	''' Performs an implicit conversion from nullable <see cref="Double" /> to <see cref="JsonNumber" />.
+	''' </summary>
+	''' <param name="value">The value to convert.</param>
+	''' <returns>The <see cref="JsonNumber" /> casted from the specified value.</returns>
+	Public Shared Widening Operator CType(value As Double?) As JsonValue
+		If Not value.HasValue Then
 			Return Nothing
 		End If
 
-		Return New JsonNumber(number.Value)
+		Return New JsonNumber(value.Value)
 	End Operator
 
 
-	Public Shared Widening Operator CType(number As Decimal) As JsonValue
-		Return New JsonNumber(number)
+	''' <summary>
+	''' Performs an implicit conversion from <see cref="Decimal" /> to <see cref="JsonNumber" />.
+	''' </summary>
+	''' <param name="value">The value to convert.</param>
+	''' <returns>The <see cref="JsonNumber" /> casted from the specified value.</returns>
+	Public Shared Widening Operator CType(value As Decimal) As JsonValue
+		Return New JsonNumber(value)
 	End Operator
 
 
-	Public Shared Widening Operator CType(number As Decimal?) As JsonValue
-		If Not number.HasValue Then
+	''' <summary>
+	''' Performs an implicit conversion from nullable <see cref="Decimal" /> to <see cref="JsonNumber" />.
+	''' </summary>
+	''' <param name="value">The value to convert.</param>
+	''' <returns>The <see cref="JsonNumber" /> casted from the specified value.</returns>
+	Public Shared Widening Operator CType(value As Decimal?) As JsonValue
+		If Not value.HasValue Then
 			Return Nothing
 		End If
 
-		Return New JsonNumber(number.Value)
+		Return New JsonNumber(value.Value)
 	End Operator
 
 #End Region

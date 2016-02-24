@@ -63,6 +63,7 @@
     </CodeAnalysisDependentAssemblyPaths>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Tests\JsonDynamicTest.vb" />
     <Compile Include="Tests\JsonValueTest.vb" />
     <Compile Include="Tests\JsonDecoderTest.vb" />
     <Compile Include="Tests\JsonEncoderTest.vb" />
