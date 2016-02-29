@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<package>
+	<metadata>
+		<id>$id$</id>
+		<version>$version$</version>
+
+		<title>$title$</title>
+		<description>$description$</description>
+
+		<authors>Michal Novák</authors>
+		<copyright>Copyright © 2014 Michal Novák, Dextronet.</copyright>
+		<tags>json</tags>
+
+		<projectUrl>http://jsonie.weborama.cz/</projectUrl>
+		<iconUrl>https://raw.githubusercontent.com/mancze/jsonie/master/Resources/Logo/jsonie-64.png</iconUrl>
+		<licenseUrl>https://raw.githubusercontent.com/mancze/jsonie/master/LICENSE.md</licenseUrl>
+	</metadata>
+</package>
