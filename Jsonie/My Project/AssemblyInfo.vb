@@ -8,9 +8,9 @@ Imports System.Runtime.InteropServices
 
 ' Review the values of the assembly attributes
 
-<Assembly: AssemblyTitle("Jsonie Framework")> 
-<Assembly: AssemblyDescription("Json Data Encoding/Decoding Framework")> 
-<Assembly: AssemblyCompany("Dextronet")> 
+<Assembly: AssemblyTitle("Jsonie")> 
+<Assembly: AssemblyDescription("Work with JSON data directly without serialization wrappers.")> 
+<Assembly: AssemblyCompany("Michal Novák, Dextronet")> 
 <Assembly: AssemblyProduct("Jsonie")> 
 <Assembly: AssemblyCopyright("Copyright © 2014 Michal Novák, Dextronet.")> 
 <Assembly: AssemblyTrademark("")> 
@@ -31,4 +31,4 @@ Imports System.Runtime.InteropServices
 ' by using the '*' as shown below:
 ' <Assembly: AssemblyVersion("1.0.*")> 
 
-<Assembly: AssemblyVersion("0.1.0.*")> 
+<Assembly: AssemblyVersion("0.2.0.*")> 
