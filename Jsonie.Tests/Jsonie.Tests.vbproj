@@ -59,6 +59,7 @@
   </ItemGroup>
   <ItemGroup>
     <Import Include="Dextronet.Jsonie" />
+    <Import Include="Dextronet.Jsonie.Extensions" />
     <Import Include="System" />
     <Import Include="System.Collections" />
     <Import Include="System.Collections.Generic" />
