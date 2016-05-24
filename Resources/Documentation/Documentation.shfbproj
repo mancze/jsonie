@@ -63,8 +63,8 @@
       <DocumentationSource sourceFile="..\..\Jsonie\bin\Release\Dextronet.Jsonie.dll" />
 <DocumentationSource sourceFile="..\..\Jsonie\bin\Release\Dextronet.Jsonie.xml" /></DocumentationSources>
     <NamespaceSummaries>
-      <NamespaceSummaryItem name="Dextronet.Jsonie" isDocumented="True" xmlns="">The Dextronet.Jsonie namespace contains all the classes of the framework. Library uses flat namespace strucutre as it is very small and there is no need to make subnamespaces.</NamespaceSummaryItem>
-    </NamespaceSummaries>
+      <NamespaceSummaryItem name="Dextronet.Jsonie" isDocumented="True">The Dextronet.Jsonie namespace contains all the classes of the framework. Library uses flat namespace strucutre as it is very small and there is no need to make subnamespaces.</NamespaceSummaryItem>
+<NamespaceSummaryItem name="Dextronet.Jsonie.Extensions" isDocumented="True">The Dextronet.Jsonie.Extensions namespace contains extension methods of the library.</NamespaceSummaryItem></NamespaceSummaries>
   </PropertyGroup>
   <!-- There are no properties for these groups.  AnyCPU needs to appear in order for Visual Studio to perform
 			 the build.  The others are optional common platform types that may appear. -->
