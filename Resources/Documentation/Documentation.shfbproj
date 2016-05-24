@@ -60,9 +60,8 @@
       <Argument Key="includeEnumValues" Value="true" xmlns="" />
     </TransformComponentArguments>
     <DocumentationSources>
-      <DocumentationSource sourceFile="..\..\Jsonie\bin\Release\Jsonie.dll" />
-      <DocumentationSource sourceFile="..\..\Jsonie\bin\Release\Jsonie.xml" />
-    </DocumentationSources>
+      <DocumentationSource sourceFile="..\..\Jsonie\bin\Release\Dextronet.Jsonie.dll" />
+<DocumentationSource sourceFile="..\..\Jsonie\bin\Release\Dextronet.Jsonie.xml" /></DocumentationSources>
     <NamespaceSummaries>
       <NamespaceSummaryItem name="Dextronet.Jsonie" isDocumented="True" xmlns="">The Dextronet.Jsonie namespace contains all the classes of the framework. Library uses flat namespace strucutre as it is very small and there is no need to make subnamespaces.</NamespaceSummaryItem>
     </NamespaceSummaries>
